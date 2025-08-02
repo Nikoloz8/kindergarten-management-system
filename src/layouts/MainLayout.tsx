@@ -1,5 +1,5 @@
 export default function MainLayout() {
   return (
-    <div>MainLayout</div>
+    <div className="text-[red]">MainLayout</div>
   )
 }
