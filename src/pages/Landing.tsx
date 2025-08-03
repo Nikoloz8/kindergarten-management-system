@@ -1,3 +1,4 @@
+import ChildCard from "../components/LandingComponents/ChildCard"
 import Stats from "../components/LandingComponents/Stats"
 
 export default function Landing() {
@@ -76,11 +77,32 @@ export default function Landing() {
                 </div>
             </section>
             <section className="w-[1290px] mt-[32px] flex gap-[24px]">
-                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს"/>
-                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს"/>
-                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს"/>
-                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს"/>
+                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
+                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
+                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
+                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
             </section>
+            <div className="flex gap-[24px] mt-[24px] w-[1290px]">
+                <section className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] w-[800px]">
+                    <div className="flex justify-between">
+                        <div className="flex gap-[16px] items-center text-[2.4rem] font-[600] leading-[24px] text-[#020817]">
+                            <img src="/assets/SVG10.svg" alt="" />
+                            <span className="mb-[4px]">
+                                კლასის ბავშვები
+                            </span>
+                        </div>
+                        <button className="p-[8px_16px] border-[1px] border-solid border-[#E2E8F0] rounded-[12px] cursor-pointer font-[500] text-[1.4rem] leading-[20px] tracking-[-0.6px] text-[#020817]">ყველას ნახვა</button>
+                    </div>
+                    <div className="flex gap-[16px] flex-wrap justify-start">
+                        <ChildCard />
+                        <ChildCard />
+                        <ChildCard />
+                        <ChildCard />
+                        <ChildCard />
+
+                    </div>
+                </section>
+            </div>
         </div>
     )
 }
