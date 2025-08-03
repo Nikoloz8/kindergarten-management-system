@@ -32,7 +32,7 @@ export default function Landing() {
     ]
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center flex-col">
             <div className="w-[1290px]">
                 <header className="flex flex-col gap-[12px] w-full p-[10px_0]">
                     <div className="flex w-full justify-between items-center">
@@ -40,7 +40,7 @@ export default function Landing() {
                             <h3 className="text-[2rem] font-[700] leading-[28px] text-[#020817]">სკოლამდელი</h3>
                             <h4 className="text-center w-full text-[1.2rem] font-[400] leading-[12px] text-[#64748B]">მართვის პლატფორმა</h4>
                         </div>
-                        <div className="block p-[8px_20px] bg-[#0F172A] items-center justify-center rounded-[8px] text-[#F8FAFC] font-[500] text-[1.4rem]">
+                        <div className="p-[8px_20px] bg-[#0F172A] rounded-[8px] text-[#F8FAFC] font-[500] text-[1.4rem]">
                             მასწავლებელი
                         </div>
                         <div className="flex gap-[24px] items-center">
@@ -61,6 +61,18 @@ export default function Landing() {
                     </div>
                 </header>
             </div>
+            <span className="w-full h-[1px] bg-[#E2E8F0] block mt-[14px]"></span>
+            <section className="relative w-[1290px] mt-[24px] rounded-[8px] p-[18px_0] flex justify-center items-center bg-[url('/assets/Container.svg')] bg-cover overflow-hidden bg-no-repeat bg-center">
+                <div className="absolute w-full h-full bg-linear-to-r from-[#0f172acc] to-[#f1f5f999] left-0"></div>
+                <div className="flex flex-col w-[670px] items-center z-10 justify-center gap-[16px]">
+                    <h1 className="text-[3.6rem] font-[700] text-center text-[#FFFFFF] leading-[40px]">მოგესალმებით სკოლამდელ პლატფორმაზე!</h1>
+                    <h3 className="text-[2rem] text-center font-[400] text-[#FFFFFF] leading-[28px]">ბავშვების განვითარების თვალყურისა და მშობლებთან კომუნიკაციის ერთიანი სისტემა</h3>
+                    <button className="p-[12px_32px] rounded-[8px] bg-[rgba(255,255,255,0.2)] border-[1px] border-solid flex items-center gap-[8px] duration-300 transition-all font-[500] text-[1.4rem] leading-[20px] cursor-pointer text-[#FFFFFF] border-[rgba(255,255,255,0.4)]">
+                        <img src="/assets/SVG9.svg" alt="" />
+                        დღევანდელი მონაცემები
+                    </button>
+                </div>
+            </section>
         </div>
     )
 }
