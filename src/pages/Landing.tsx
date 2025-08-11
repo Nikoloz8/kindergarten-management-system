@@ -1,6 +1,7 @@
 import ActivityCard from "../components/landing/ActivityCard"
 import ChildCard from "../components/landing/ChildCard"
 import FutureEventsCard from "../components/landing/FutureEventsCard"
+import QuickActionsButton from "../components/landing/QuickActionsButton"
 import Stats from "../components/landing/Stats"
 
 export default function Landing() {
@@ -130,6 +131,13 @@ export default function Landing() {
                             <img src="/assets/SVG4.svg" alt="" />
                             <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">კალენდრის ნახვა</h4>
                         </button>
+                    </section>
+                    <section className="border-[1px] flex flex-col gap-[12px] border-solid border-[#E2E8F0] p-[24px]">
+                        <h4 className="text-[1.4rem] font-[600] tracking-[-0.35px] text-[#020817]">სწრაფი მოქმედებები</h4>
+
+                        <QuickActionsButton svg="/assets/SVG5.svg" route="" text="ახალი შეტყობინება" />
+                        <QuickActionsButton svg="/assets/SVG4.svg" route="" text="ღონისძიების დამატება" />
+                        <QuickActionsButton svg="/assets/SVG10.svg" route="" text="დასწრების ჩანიშვნა" />
                     </section>
                 </div>
             </div>
