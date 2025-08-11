@@ -1,7 +1,7 @@
 export default function ChildCard() {
     return (
-        <div className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[16px] flex flex-col gap-[12px] w-[48%] items-end">
-            <div className="flex justify-between items-center">
+        <div className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[16px] flex flex-col gap-[12px] w-[48%] hover:scale-105 transition-all duration-300 items-end">
+            <div className="flex justify-between items-center w-full">
                 <div className="flex gap-[16px] w-full">
                     <img src="/assets/მარიამ კვარაცხელია.svg" alt="" />
                     <div className="flex flex-col gap-[8px] w-full">
