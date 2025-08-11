@@ -1,5 +1,6 @@
 import ActivityCard from "../components/landing/ActivityCard"
 import ChildCard from "../components/landing/ChildCard"
+import FutureEventsCard from "../components/landing/FutureEventsCard"
 import Stats from "../components/landing/Stats"
 
 export default function Landing() {
@@ -84,7 +85,7 @@ export default function Landing() {
                 <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
             </section>
             <div className="flex gap-[24px] mt-[24px] w-[1290px]">
-                <section className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] min-w-[800px] max-w-[800px]">
+                <section className="border-[1px] max-h-[518px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] min-w-[800px] max-w-[800px]">
                     <div className="flex justify-between">
                         <div className="flex gap-[16px] items-center text-[2.4rem] font-[600] leading-[24px] text-[#020817]">
                             <img src="/assets/SVG10.svg" alt="" />
@@ -101,7 +102,7 @@ export default function Landing() {
                     </div>
                 </section>
                 <div className="flex flex-col w-fit gap-[24px] ">
-                    <section className="flex flex-col gap-[12px] max-h-[518.67px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-[1px] border-solid border-[#E2E8F0] p-[24px] flex-1 overflow-y-auto">
+                    <section className="flex flex-col gap-[12px] max-h-[518px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-[1px] border-solid border-[#E2E8F0] p-[24px] flex-1 overflow-y-auto">
                         <span className="flex gap-[8px] items-center">
                             <img src="/assets/SVG13.svg" alt="" />
                             <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">დღევანდელი აქტივობები</h4>
@@ -116,6 +117,19 @@ export default function Landing() {
                         <ActivityCard />
                         <ActivityCard />
                         <ActivityCard />
+                    </section>
+                    <section className="border-[1px] flex flex-col gap-[12px] border-solid border-[#E2E8F0] p-[24px]">
+                        <span className="flex gap-[8px] items-center">
+                            <img src="/assets/SVG15.svg" alt="" />
+                            <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">მომავალი ღონისძიებები</h4>
+                        </span>
+                        <FutureEventsCard />
+                        <FutureEventsCard />
+                        <FutureEventsCard />
+                        <button className="flex justify-center gap-[16px] border-[1px] border-solid border-[#E2E8F0] p-[12px_0] rounded-[8px] cursor-pointer items-center">
+                            <img src="/assets/SVG4.svg" alt="" />
+                            <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">კალენდრის ნახვა</h4>
+                        </button>
                     </section>
                 </div>
             </div>
