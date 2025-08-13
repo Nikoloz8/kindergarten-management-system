@@ -37,6 +37,20 @@ export default function Landing() {
         }
     ]
 
+    const workingHours = [{
+        weekDay: "ორშაბათი - პარასკევი",
+        hours: "8:00 - 18:00"
+    },
+    {
+        weekDay: "შაბათი",
+        hours: "9:00 - 15:00"
+    },
+    {
+        weekDay: "კვირა",
+        hours: "დაკეტილია"
+    }
+    ]
+
     return (
         <div className="flex items-center justify-center flex-col">
             <div className="w-[1290px]">
@@ -86,24 +100,44 @@ export default function Landing() {
                 <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
             </section>
             <div className="flex gap-[24px] mt-[24px] w-[1290px]">
-                <section className="border-[1px] max-h-[518px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] min-w-[800px] max-w-[800px]">
-                    <div className="flex justify-between">
-                        <div className="flex gap-[16px] items-center text-[2.4rem] font-[600] leading-[24px] text-[#020817]">
-                            <img src="/assets/SVG10.svg" alt="" />
-                            <span className="mb-[4px]">
-                                კლასის ბავშვები
-                            </span>
+                <div className="flex flex-col gap-[24px]">
+                    <section className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] min-w-[800px] max-w-[800px]">
+                        <div className="flex justify-between">
+                            <div className="flex gap-[16px] items-center text-[2.4rem] font-[600] leading-[24px] text-[#020817]">
+                                <img src="/assets/SVG10.svg" alt="" />
+                                <span className="mb-[4px]">
+                                    კლასის ბავშვები
+                                </span>
+                            </div>
+                            <button className="p-[8px_16px] border-[1px] border-solid border-[#E2E8F0] rounded-[12px] cursor-pointer font-[500] text-[1.4rem] leading-[20px] tracking-[-0.6px] text-[#020817]">ყველას ნახვა</button>
                         </div>
-                        <button className="p-[8px_16px] border-[1px] border-solid border-[#E2E8F0] rounded-[12px] cursor-pointer font-[500] text-[1.4rem] leading-[20px] tracking-[-0.6px] text-[#020817]">ყველას ნახვა</button>
-                    </div>
-                    <div className="flex gap-[16px] flex-wrap justify-center">
-                        <ChildCard />
-                        <ChildCard />
-                        <ChildCard />
-                    </div>
-                </section>
+                        <div className="flex gap-[16px] flex-wrap justify-center">
+                            <ChildCard />
+                            <ChildCard />
+                            <ChildCard />
+                        </div>
+                    </section>
+                    <section className="border-[1px] max-h-[518px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
+                        <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">სამუშაო საათები</h4>
+                        <div className="flex flex-col gap-[12px]">
+                            <ul className="flex flex-col gap-[16px]">
+                                {workingHours.map((e, i) => {
+                                    return <li key={i} className="flex justify-between w-full">
+                                        <h5 className="text-[1.4rem] font-[600] tracking-[-0.45px] text-[#020817]">{e.weekDay}</h5>
+                                        <h6 className="text-[1.2rem] font-[600] tracking-[-0.45px] text-[#64748b]">{e.hours}</h6>
+                                    </li>
+                                })}
+                            </ul>
+                            <span className="w-[full] h-[1px] bg-[#ced3db]"></span>
+                            <button className="flex justify-center gap-[16px] border-[1px] border-solid border-[#E2E8F0] p-[12px_0] rounded-[8px] cursor-pointer items-center">
+                                <img src="/assets/SVG4.svg" alt="" />
+                                <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">ვიზიტის დაჯავშნა</h4>
+                            </button>
+                        </div>
+                    </section>
+                </div>
                 <div className="flex flex-col w-fit gap-[24px] ">
-                    <section className="flex flex-col gap-[12px] max-h-[518px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-[1px] border-solid border-[#E2E8F0] p-[24px] flex-1 overflow-y-auto">
+                    <section className="flex flex-col gap-[12px] max-h-[511.5px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-[1px] border-solid border-[#E2E8F0] p-[24px] flex-1 overflow-y-auto">
                         <span className="flex gap-[8px] items-center">
                             <img src="/assets/SVG13.svg" alt="" />
                             <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">დღევანდელი აქტივობები</h4>
