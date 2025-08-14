@@ -51,6 +51,25 @@ export default function Landing() {
     }
     ]
 
+    const contactInfo = [
+        {
+            logo: "📞",
+            info: "+995 322 123 456",
+            miniInfo: "ყოველდღე 8:00 - 18:00"
+        },
+        {
+            logo: "✉️",
+            info: "info@kindergarten.ge",
+            miniInfo: "ელექტრონული ფოსტა"
+        },
+        {
+            logo: "📍",
+            info: "თბილისი, ვაჟა-ფშაველას 45",
+            miniInfo: "მისამართი"
+        }
+
+    ]
+
     return (
         <div className="flex items-center justify-center flex-col">
             <div className="w-[1290px]">
@@ -117,7 +136,7 @@ export default function Landing() {
                             <ChildCard />
                         </div>
                     </section>
-                    <section className="border-[1px] max-h-[518px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
+                    <section className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
                         <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">სამუშაო საათები</h4>
                         <div className="flex flex-col gap-[12px]">
                             <ul className="flex flex-col gap-[16px]">
@@ -133,6 +152,20 @@ export default function Landing() {
                                 <img src="/assets/SVG4.svg" alt="" />
                                 <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">ვიზიტის დაჯავშნა</h4>
                             </button>
+                        </div>
+                    </section>
+                    <section className="border-[1px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
+                        <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">კონტაქტი</h4>
+                        <div className="flex flex-col gap-[16px]">
+                            {contactInfo.map((e, i) => {
+                                return <div key={i} className="flex gap-[12px]">
+                                    <span className="flex w-[40px] items-center justify-center text-2xl h-[40px] rounded-full bg-[#0f172a1a]">{e.logo}</span>
+                                    <div className="flex h-full justify-between flex-col">
+                                        <h5 className="text-[1.4rem] font-[600] tracking-[-0.45px] text-[#020817]">{e.info}</h5>
+                                        <h6 className="text-[1.2rem] font-[600] tracking-[-0.45px] text-[#64748b]">{e.miniInfo}</h6>
+                                    </div>
+                                </div>
+                            })}
                         </div>
                     </section>
                 </div>
