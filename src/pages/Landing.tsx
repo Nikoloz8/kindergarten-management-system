@@ -37,6 +37,8 @@ export default function Landing() {
         }
     ]
 
+    const fastLinks = ["ბავშვები", "აქტივობები", "ღონისძიებები", "გალერეა"]
+
     const workingHours = [{
         weekDay: "ორშაბათი - პარასკევი",
         hours: "8:00 - 18:00"
@@ -208,6 +210,46 @@ export default function Landing() {
                     </section>
                 </div>
             </div>
+            <footer className="bg-[#f1f5f9] w-full flex justify-center mt-[64px]">
+                <div className="w-[1290px] p-[32px_16px] flex flex-col gap-[32px]">
+                    <div className="flex justify-between w-full">
+                        <div className="flex flex-col gap-[16px] max-w-[33%]">
+                            <h4 className="text-[1.8rem] font-[600] text-[#020817]">საბავშვო ბაღი</h4>
+                            <p className="text-[#64748b] text-[1.4rem] font-[400]">თქვენი შვილების უსაფრთხო და ბედნიერი განვითარების ადგილი</p>
+                            <h6 className="flex items-center gap-[8px] text-[#64748b] text-[1.4rem] font-[400]">
+                                <img className="h-[16px] w-[16px]" src="/assets/SVG16.svg" alt="" />
+                                შექმნილია სიყვარულით
+                            </h6>
+                        </div>
+                        <div className="flex flex-col gap-[16px] max-w-[33%]">
+                            <h4 className="text-[1.8rem] font-[600] text-[#020817]">სწრაფი ბმულები</h4>
+                            <ul className="flex flex-col gap-[8px]">
+                                {fastLinks.map((e, i) => {
+                                    return <li key={i} className="text-[#64748b] text-[1.4rem] font-[400]">{e}</li>
+                                })}
+                            </ul>
+                        </div>
+                        <div className="flex flex-col gap-[16px] max-w-[33%]">
+                            <h4 className="text-[1.8rem] font-[600] text-[#020817]">კონტაქტი</h4>
+                            <ul className="flex flex-col gap-[12px]">
+                                {contactInfo.map((e, i) => {
+                                    return <li key={i} className="text-[#64748b] text-[1.4rem] font-[400] flex items-center gap-[4px]">
+                                        <span>{e.logo}</span>
+                                        <span>{e.info}</span>
+                                    </li>
+                                })}
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="border-t-[1px] border-solid border-[#e2e8f0] pt-[24px] w-full flex justify-between items-center">
+                        <h5 className="text-[#64748b] text-[1.4rem] font-[400]">© 2025 საბავშვო ბაღი. ყველა უფლება დაცულია.</h5>
+                        <div className="flex gap-[24px] items-center">
+                            <h5 className="text-[#64748b] text-[1.4rem] font-[400]">პარამეტრები</h5>
+                            <h5 className="text-[#64748b] text-[1.4rem] font-[400]">კონფიდენციალურობა</h5>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     )
 }
