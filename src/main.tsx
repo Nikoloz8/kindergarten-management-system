@@ -4,7 +4,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import Landing from './pages/Landing'
-import RoleChoose from './pages/RoleChoose'
+import RoleSelect from './pages/RoleSelect'
 
 const router = createBrowserRouter([{
   element: <MainLayout />,
@@ -15,7 +15,7 @@ const router = createBrowserRouter([{
       path: '/:role'
     },
     {
-      element: <RoleChoose />,
+      element: <RoleSelect />,
       path: '/choose-role'
     }
   ]
