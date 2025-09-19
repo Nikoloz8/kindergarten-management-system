@@ -25,7 +25,7 @@ export default function Header() {
                     <button className="flex items-center justify-center duration-300 transition-all rounded-[8px] hover:bg-[#f1f5f9] h-[36px] p-[0_12px] cursor-pointer">
                         <img src="/assets/SVG17.svg" className="w-[16px] h-[16px]" alt="" />
                     </button>
-                    <button className="text-[1.4rem] font-[500] text-[#0f172a] duration-300 transition-all rounded-[8px] hover:bg-[#f1f5f9] h-[36px] p-[0_12px] cursor-pointer">
+                    <button onClick={() => navigate("/login")} className="text-[1.4rem] font-[500] text-[#0f172a] duration-300 transition-all rounded-[8px] hover:bg-[#f1f5f9] h-[36px] p-[0_12px] cursor-pointer">
                         შესვლა
                     </button>
                     <button onClick={() => navigate("/choose-role")} className="text-[1.4rem] font-[500] text-[#FFFFFF] duration-300 transition-all rounded-[8px] bg-[#0f172a] hover:bg-[#272e3f] h-[36px] p-[0_12px] cursor-pointer">
