@@ -1,16 +1,12 @@
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 export default function MainLayout() {
 
-    const navigate = useNavigate()
-
     useEffect(() => {
-        navigate("/")
-
         if (!localStorage.getItem("currentUser")) {
             localStorage.setItem("currentUser", JSON.stringify({
                 role: "Guest"

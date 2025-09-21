@@ -14,7 +14,7 @@ const router = createBrowserRouter([{
   children: [
     {
       element: <Landing />,
-      path: '/:role'
+      path: '/'
     },
     {
       element: <RoleSelect />,
@@ -22,14 +22,15 @@ const router = createBrowserRouter([{
     },
     {
       element: <Register />,
-      path:"/register/:role"
+      path: "/register/:role"
     },
     {
-      element:<Login />,
-      path:"/login"
+      element: <Login />,
+      path: "/login"
     }
   ]
 }])
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

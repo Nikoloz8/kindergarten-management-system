@@ -6,6 +6,10 @@
 
 import { useNavigate } from "react-router-dom"
 import ProgramCard from "../components/landing/ProgramCard"
+import index from "../utils"
+import SVG1 from "../../public/assets/SVG1.svg?react"
+import SVG5 from "../../public/assets/SVG5.svg?react"
+import SVG4 from "../../public/assets/SVG4.svg?react"
 
 export default function Landing() {
 
@@ -57,6 +61,13 @@ export default function Landing() {
     }
     ]
 
+
+
+    const { getCurrentUser } = index()
+    const currentUser = getCurrentUser()
+    let role = currentUser.role
+    if (!role) role = "Guest"
+
     const contactInfo = [
         {
             logo: "📞",
@@ -75,37 +86,51 @@ export default function Landing() {
         }
     ]
 
+
     return (
         <>
-            
+
             <span className="w-full h-[1px] bg-[#E2E8F0] block"></span>
             <section className="relative w-[1290px] mt-[24px] rounded-[16px] p-[18px_0] flex justify-center items-center bg-[url('/assets/Container.svg')] bg-cover overflow-hidden bg-no-repeat bg-center">
                 <div className="absolute w-full h-full bg-linear-to-r from-[#0f172acc] to-[#f1f5f999] left-0"></div>
                 <div className="flex flex-col w-[670px] items-center z-10 justify-center gap-[16px]">
-                    <h1 className="text-[3.6rem] font-[700] text-center text-[#FFFFFF] leading-[40px]">მოგესალმებით სკოლამდელ პლატფორმაზე!</h1>
-                    <h3 className="text-[2rem] text-center font-[400] text-[#FFFFFF] leading-[28px]">ბავშვების განვითარების მეთვალყურეობისა და მშობლებთან კომუნიკაციის ერთიანი სისტემა</h3>
+                    <h1 className="text-[3.6rem] font-[700] text-center text-[#FFFFFF] leading-[40px]">{`მოგესალმებით სკოლამდელ პლატფორმაზე!`}</h1>
+                    <h3 className="text-[2rem] text-center font-[400] text-[#FFFFFF] leading-[28px]">{role === "Guest" ? `ბავშვების განვითარების მეთვალყურეობისა და მშობლებთან კომუნიკაციის ერთიანი სისტემა` : `თვალყური ადევნეთ ${currentUser.childFullName.split(" ")[0]}ის განვითარებასა და აქტივობებს`}</h3>
                     {/* <button className="p-[12px_32px] rounded-[8px] bg-[rgba(255,255,255,0.2)] border-[1px] border-solid flex items-center gap-[8px] duration-300 transition-all font-[500] text-[1.4rem] leading-[20px] cursor-pointer hover:scale-110 text-[#FFFFFF] border-[rgba(255,255,255,0.4)]">
                         <img src="/assets/SVG9.svg" alt="" />
                         დღევანდელი მონაცემები
                     </button> */}
                     <div className="flex items-center gap-[12px]">
                         <button onClick={() => navigate("/choose-role")} className="text-[1.4rem] font-[500] text-[#FFFFFF] duration-300 transition-all rounded-[8px] bg-[#0f172a] hover:bg-[#272e3f] p-[8px_32px] cursor-pointer flex items-center gap-[12px]">
-                            <img className="w-[16px] h-[16px]" src="/assets/SVG18.svg" alt="" />
-                            რეგისტრაცია
+                            {role === "Parent" ?
+                                <SVG1 stroke="#FFFFFF" />
+                                :
+                                <img className="w-[16px] h-[16px]" src={`/assets/SVG18.svg`} alt="" />
+                            }
+                            {role === "Parent" ? "ჩემი ბავშვი" : "რეგისტრაცია"}
                         </button>
-                        <button onClick={() => navigate("/login")} className="p-[8px_32px] rounded-[8px] bg-[rgba(255,255,255,0.2)] hover:bg-[rgba(255,255,255,0.3)] border-[1px] border-solid flex items-center gap-[12px] duration-300 transition-all font-[500] text-[1.4rem] leading-[20px] cursor-pointer text-[#FFFFFF] hover:text-[#0f172a] border-[rgba(255,255,255,0.4)] group">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-[#0f172a]! transition-all duration-300 mt-[3px] stroke-[#FFFFFF]"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line></svg>
-                            შესვლა
+                        <button onClick={() => navigate("/login")} className="p-[8px_32px] rounded-[8px] bg-[rgba(255,255,255,0.2)] hover:bg-[rgba(255,255,255,0.3)] border-[1px] border-solid flex items-center gap-[12px] duration-300 transition-all font-[500] text-[1.4rem] group cursor-pointer text-[#FFFFFF] hover:text-[#0f172a] border-[rgba(255,255,255,0.4)] group">
+                            {role === "Parent" ?
+                                <>
+                                    <SVG5 stroke="#FFFFFF" className="group-hover:stroke-[#0f172a] transition-all duration-300"/>
+                                    დაუკავშირდით მასწავლებლებს
+                                </> :
+                                <>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-[#0f172a]! transition-all duration-300 mt-[3px] stroke-[#FFFFFF]"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line></svg>
+                                    შესვლა
+                                </>
+                            }
+
                         </button>
                     </div>
                 </div>
             </section>
-            {/* <section className="w-[1290px] mt-[32px] flex justify-between">
+            <section className="w-[1290px] mt-[32px] flex justify-between">
+                {/* <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
                 <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
                 <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
-                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
-                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" />
-            </section> */}
+                <Stats title="ბავშვები კლასში" count="18" stat="15 დამსწრე დღეს" /> */}
+            </section>
             <section className="w-[1290px] mt-[32px] bg-[#f9fafa] p-[24px] flex flex-col gap-[24px] border-[1px] border-solid border-[#e2e8f0]">
                 <div className="flex flex-col items-center justify-center">
                     <h3 className="text-[2.4rem] font-[600] text-[#020817]">ჩვენი პროგრამები</h3>
@@ -114,7 +139,7 @@ export default function Landing() {
                 <div className="flex justify-between">
                     <ProgramCard emoji="🎨" text="ნახატი, ქანდაკება, მუსიკა და ცეკვა" title="შემოქმედება" />
                     <ProgramCard emoji="📚" text="ენები, მათემატიკა, მეცნიერება" title="განათლება" />
-                    <ProgramCard emoji="⚽" text="სპორტი, თამაშები, ფიზიკური დავარჯიშება" title="ფიზიკური აქტივობა" />
+                    <ProgramCard emoji="⚽" text="სპორტი, თამაშები, ფიზიკური ვარჯიში" title="ფიზიკური აქტივობა" />
                 </div>
             </section>
             <div className="flex gap-[24px] mt-[24px] w-[1290px]">
@@ -162,7 +187,7 @@ export default function Landing() {
                             </ul>
                             <span className="w-[full] h-[1px] bg-[#ced3db]"></span>
                             <button className="flex justify-center gap-[16px] border-[1px] border-solid border-[#E2E8F0] p-[12px_0] rounded-[8px] cursor-pointer items-center">
-                                <img src="/assets/SVG4.svg" alt="" />
+                                <SVG4 stroke="#020817"/>
                                 <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">ვიზიტის დაჯავშნა</h4>
                             </button>
                         </div>
@@ -207,7 +232,6 @@ export default function Landing() {
                     </section> */}
                 </div>
             </div>
-
         </>
     )
 }

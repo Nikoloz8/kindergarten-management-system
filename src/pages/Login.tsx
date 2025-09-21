@@ -17,7 +17,6 @@ export default function Login() {
         const users = localStorage.getItem("users")
         if (!users) return
         const currentUser = JSON.parse(users).find((e: TUser) => { return e.email === watch().email && e.password === watch().password })
-        console.log(currentUser)
         if (!currentUser) {
             return
         }
@@ -47,7 +46,7 @@ export default function Login() {
                             დარეგისტრირდით
                         </a>
                     </span>
-                    <a href="" className="text-[#64748b] cursor-pointer hover:text-[#0f172a] text-[1.4rem] leading-[20px]">
+                    <a onClick={() => navigate(`/}`)} className="text-[#64748b] cursor-pointer hover:text-[#0f172a] text-[1.4rem] leading-[20px]">
                         მთავარ გვერდზე დაბრუნება
                     </a>
                 </div>

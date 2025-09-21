@@ -1,6 +1,7 @@
-import { useNavigate, useOutletContext, useParams } from "react-router-dom"
+import { useNavigate, useOutletContext } from "react-router-dom"
 import styles from "../shared/styles"
 import { useEffect } from "react"
+import index from "../utils"
 
 export default function Register() {
 
@@ -9,20 +10,23 @@ export default function Register() {
         reset()
     }, [])
 
-    const { role } = useParams()
     const navigate = useNavigate()
     const { inputStyle, labelStyle } = styles()
 
+    const { getRole } = index()
+
+    const role = getRole()
+    
+    if (!role) return
 
     const handleRegister = () => {
         const users = localStorage.getItem("users")
         if (!users) return
         const newUsers = JSON.parse(users)
-        console.log(newUsers)
         newUsers.push(
             {
                 role: "Parent",
-                firsname: watch().name,
+                firstname: watch().firstname,
                 lastname: watch().lastname,
                 email: watch().email,
                 password: watch().password,
@@ -30,8 +34,7 @@ export default function Register() {
                 childAge: watch().childAge
             }
         )
-        
-        console.log(newUsers)
+
         localStorage.setItem("users", JSON.stringify(newUsers))
         reset()
         navigate("/login")
@@ -41,7 +44,7 @@ export default function Register() {
         <div className="flex flex-col gap-[24px] p-[24px] border-[1px] border-solid border-[#e2e8f0]">
             <div className="flex flex-col gap-[4px] items-center">
                 <h1 className="font-[700] text-[3rem] leading-[36px] text-[#020817]">ანგარიშის შექმნა</h1>
-                <h3 className="text-[1.4rem] leading-[20px] text-[#64748b]">შემოუერთდით როგორც {role}</h3>
+                <h3 className="text-[1.4rem] leading-[20px] text-[#64748b]">შემოუერთდით როგორც { }</h3>
                 <h3 onClick={() => navigate("/choose-role")} className="text-[1.4rem] leading-[20px] text-[#64748b] hover:text-[#020817] cursor-pointer">როლის შეცვლა</h3>
                 <form onClick={(e) => e.preventDefault()} action="" className="flex flex-col gap-[16px] mt-[12px]">
                     <div className="flex gap-[16px]">
@@ -82,7 +85,7 @@ export default function Register() {
                             შედით
                         </a>
                     </span>
-                    <a href="" className="text-[#64748b] cursor-pointer hover:text-[#0f172a] text-[1.4rem] leading-[20px]">
+                    <a onClick={() => navigate(`/`)} className="text-[#64748b] cursor-pointer hover:text-[#0f172a] text-[1.4rem] leading-[20px]">
                         მთავარ გვერდზე დაბრუნება
                     </a>
                 </div>

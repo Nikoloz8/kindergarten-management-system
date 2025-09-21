@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SVG20 from "../../public/assets/SVG20.svg?react"
+import SVG21 from "../../public/assets/SVG21.svg?react"
+import SVG22 from "../../public/assets/SVG22.svg?react"
 
 export default function RoleSelect() {
 
   const [selectedRole, setSelectedRole] = useState("")
-
   const navigate = useNavigate()
 
   const roles = [
     {
       title: "მშობელი",
-      svg: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={`${selectedRole === "მშობელი" && "stroke-white"}`} stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12h.01"></path><path d="M15 12h.01"></path><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"></path><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"></path></svg>,
+      svg: <SVG20 stroke={selectedRole === "მშობელი" ? "#FFFFFF" : "currentColor"} />,
       p: "თვალყური ადევნეთ თქვენი ბავშვის აქტივობებს, პროგრესს და დაუკავშირდით მასწავლებლებს",
       generalFunctions: ["ბავშვის ყოველდღიური აქტივობების ნახვა", "განახლებებისა და ფოტოების მიღება", "მასწავლებლებთან შეტყობინებები", "მიღწევების მეთვალყურეობა"],
       border: "#bfdbfe",
@@ -19,7 +21,7 @@ export default function RoleSelect() {
     },
     {
       title: "მასწავლებელი",
-      svg: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className={`${selectedRole === "მასწავლებელი" && "stroke-white"}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>,
+      svg: <SVG21 stroke={selectedRole === "მასწავლებელი" ? "#FFFFFF" : "currentColor"} />,
       p: "მართეთ საკლასო აქტივობები, მოსწავლეთა პროგრესი და მშობლებთან კომუნიკაცია",
       generalFunctions: ["აქტივობების რეპორტების შექმნა", "ფოტოებისა და ვიდეოების ატვირთვა", "მოსწავლეთა პროგრესის მეთვალყურეობა", "მშობლებთან კომუნიკაცია"],
       border: "#bbf7d0",
@@ -28,7 +30,7 @@ export default function RoleSelect() {
     },
     {
       title: "ადმინისტრატორი",
-      svg: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className={`${selectedRole === "ადმინისტრატორი" && "stroke-white"}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>,
+      svg: <SVG22 stroke={selectedRole === "ადმინისტრატორი" ? "#FFFFFF" : "currentColor"}/>,
       p: "მართეთ მთელი საბავშვო ბაღის ოპერაციები და მენეჯმენტი",
       generalFunctions: ["პერსონალისა და მოსწავლეთა მართვა", "ყველა რეპორტის ნახვა", "სისტემის კონფიგურაცია", "ანალიტიკური დაფა"],
       border: "#e9d5ff",
@@ -74,7 +76,7 @@ export default function RoleSelect() {
         })}
       </div>
       <div className="flex gap-[16px]">
-        <button onClick={() => navigate("/guest")} className="text-[1.4rem] font-[500] border-[1px] border-solid border-[#e2e8f0] text-[#0f172a] duration-300 transition-all hover:bg-[#f1f5f9] h-[36px] p-[8px_16px] cursor-pointer">
+        <button onClick={() => navigate("/")} className="text-[1.4rem] font-[500] border-[1px] border-solid border-[#e2e8f0] text-[#0f172a] duration-300 transition-all hover:bg-[#f1f5f9] h-[36px] p-[8px_16px] cursor-pointer">
           მთავარ გვერდზე დაბრუნება
         </button>
         {selectedRole && <button onClick={selectedRole === "მშობელი" ? () => navigate(`/register/${selectedRole}`) : () => { }} className="text-[1.4rem] font-[500] text-[#FFFFFF] duration-300 transition-all bg-[#0f172a] hover:bg-[#272e3f] h-[36px] p-[8px_16px] cursor-pointer">
