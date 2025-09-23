@@ -5,6 +5,8 @@ import SVG10 from "../../../public/assets/SVG10.svg?react"
 import SVG6 from "../../../public/assets/SVG6.svg?react"
 import SVG4 from "../../../public/assets/SVG4.svg?react"
 import SVG8 from "../../../public/assets/SVG8.svg?react"
+import SVG26 from "../../../public/assets/SVG26.svg?react"
+
 import React, { useState } from "react"
 export default function Header() {
 
@@ -47,6 +49,15 @@ export default function Header() {
 
     // const neededPanel = role === "მშობელი" ? parentPanelsArr : role === "მასწავლებელი" ? teacherPanelsArr : role === "ადმინისტრატორი" ? adminPanelsArr : []
 
+    const [showUserSettings, setShowUserSettings] = useState(false)
+
+    const logout = () => {
+        localStorage.setItem("currentUser", JSON.stringify({
+            role: "Guest"
+        }))
+        window.location.reload()
+        navigate("/")
+    }
 
     return (
         <header className="flex flex-col gap-[12px] w-full p-[10px_0]">
@@ -72,6 +83,45 @@ export default function Header() {
                             რეგისტრაცია
                         </button>
                     </>
+                    }
+                    {
+                        role !== "სტუმარი" &&
+                        <button onClick={() => setShowUserSettings(!showUserSettings)} className="flex items-center p-[4px_12px] gap-[8px] hover:bg-[#f1f5f9] rounded-[8px] relative">
+                            <span className="flex items-center justify-center rounded-full text-[1.2rem] bg-[#0f172a] text-white p-[4px]">
+                                {currentUser.firstname[0]}
+                                {currentUser.lastname[0]}
+                            </span>
+                            <img src="/assets/SVG23.svg" className={`transition-transform duration-300 ${showUserSettings ? "rotate-180" : "rotate-0"}`} alt="" />
+                            <div className={`absolute flex-col border-[1px] border-solid border-[#e2e8f0] bg-[#FFFFFF] rounded-[8px] top-[40px] right-0 p-[4px] z-10 flex opacity-0 pointer-events-none ${showUserSettings && "opacity-100! pointer-events-auto!"} transition-all duration-300`}>
+                                <div className="flex relative flex-col gap-[4px] p-[6px] items-start">
+                                    <h3 className="text-[1.4rem] font-[500] leading-none">
+                                        {currentUser.firstname} {currentUser.lastname}
+                                    </h3>
+                                    <h4 className="text-[1.2rem] leading-none text-[#64748b]">
+                                        {currentUser.email}
+                                    </h4>
+                                    <span className="p-[2px_10px] rounded-[999px] bg-[#f1f5f9] font-[600] text-[1.2rem] text-[#0f172a]">
+                                        {role}
+                                    </span>
+                                </div>
+                                <span className="w-full h-[1px] bg-[#f1f5f9] m-[4px_0]"></span>
+                                <div className="flex flex-col">
+                                    <button className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] ">
+                                        <img className="h-[16px] w-[16px]" src="/assets/SVG24.svg" alt="" />
+                                        პროფილი
+                                    </button>
+                                    <button className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] ">
+                                        <img className="h-[16px] w-[16px]" src="/assets/SVG25.svg" alt="" />
+                                        პარამეტრები
+                                    </button>
+                                    <span className="w-full h-[1px] bg-[#f1f5f9] m-[4px_0]"></span>
+                                </div>
+                                <button onClick={() => logout()} className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] text-[#ef4444]">
+                                    <SVG26 className="h-[16px] w-[16px]" stroke="#ef4444" />
+                                    გამოსვლა
+                                </button>
+                            </div>
+                        </button>
                     }
                 </div>
             </div>
