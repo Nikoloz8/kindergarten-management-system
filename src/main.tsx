@@ -7,6 +7,12 @@ import Landing from './pages/Landing'
 import RoleSelect from './pages/RoleSelect'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Children from './pages/Children'
+import Staff from './pages/Staff'
+import Activities from './pages/Activities'
+import Calendar from './pages/Calendar'
+import Settings from './pages/Settings'
+import Notifications from './pages/Notifications'
 
 const router = createBrowserRouter([{
   element: <MainLayout />,
@@ -27,6 +33,34 @@ const router = createBrowserRouter([{
     {
       element: <Login />,
       path: "/login"
+    },
+    {
+      element: <Children />,
+      path: '/children'
+    },
+    {
+      element: <Staff />,
+      path: '/staff'
+    },
+    {
+      element: <Activities />,
+      path: '/activities'
+    },
+    {
+      element: <Calendar />,
+      path: '/calendar'
+    },
+    {
+      element: <Calendar />,
+      path: '/calendar'
+    },
+    {
+      element: <Settings />,
+      path: '/settings'
+    },
+    {
+      element: <Notifications />,
+      path: "/notifications"
     }
   ]
 }])
