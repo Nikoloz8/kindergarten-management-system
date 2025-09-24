@@ -14,7 +14,15 @@ export default function MainLayout() {
         }
 
         if (!localStorage.getItem("users")) {
-            localStorage.setItem("users", "[]")
+            localStorage.setItem("users", JSON.stringify([
+                {
+                    firstname: "ნიკოლოზ",
+                    lastname: "თევდორაძე",
+                    email: "nikoloztevdoradze08@gmail.com",
+                    password: "admin1234",
+                    role: "Admin"
+                }
+            ]))
         }
 
     }, [])

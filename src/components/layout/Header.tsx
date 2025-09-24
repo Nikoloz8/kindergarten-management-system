@@ -6,14 +6,18 @@ import SVG6 from "../../../public/assets/SVG6.svg?react"
 import SVG4 from "../../../public/assets/SVG4.svg?react"
 import SVG8 from "../../../public/assets/SVG8.svg?react"
 import SVG26 from "../../../public/assets/SVG26.svg?react"
+import SVG25 from "../../../public/assets/SVG25.svg?react"
 
 import React, { useState } from "react"
 export default function Header() {
 
-    const navigate = useNavigate()
-
     const { getRole, getCurrentUser } = index()
     const currentUser = getCurrentUser()
+    if (!currentUser) {
+        return null
+    }
+
+    const navigate = useNavigate()
     const role = getRole()
 
     const [selectedPanel, setSelectedPanel] = useState("მთავარი")
@@ -21,33 +25,105 @@ export default function Header() {
         {
             title: "მთავარი",
             icon: <SVG19 />,
+            path: "/"
         },
         {
             title: "ჩემი ბავშვი",
             icon: <SVG10 />,
+            path: "my-child"
         },
         {
             title: "აქტივობები",
             icon: <SVG6 />,
+            path: "/activities"
         },
         {
             title: "კალენდარი",
             icon: <SVG4 />,
+            path: "/calendar"
         },
         {
             title: "შეტყობინებები",
             icon: <SVG8 />,
+            path: "/notifications"
         }
     ]
 
-    // const teacherPanelsArr = [
-    //     {}
-    // ]
-    // const adminPanelsArr = [
-    //     {}
-    // ]
+    const teacherPanelsArr = [
 
-    // const neededPanel = role === "მშობელი" ? parentPanelsArr : role === "მასწავლებელი" ? teacherPanelsArr : role === "ადმინისტრატორი" ? adminPanelsArr : []
+        //ჩასასწორებელი
+
+        {
+            title: "მთავარი",
+            icon: <SVG19 />,
+            path: "/"
+        },
+        {
+            title: "ბავშვები",
+            icon: <SVG10 />,
+            path: "/children"
+        },
+        {
+            title: "აქტივობები",
+            icon: <SVG6 />,
+            path: "/activities"
+        },
+        {
+            title: "კალენდარი",
+            icon: <SVG4 />,
+            path: "/calendar"
+        },
+        {
+            title: "შეტყობინებები",
+            icon: <SVG8 />,
+            path: "/notifications"
+        },
+        {
+            title: "პარამეტრები",
+            icon: <SVG8 />,
+            path: "settings"
+        }
+    ]
+
+    const adminPanelsArr = [
+        {
+            title: "მთავარი",
+            icon: <SVG19 />,
+            path: "/"
+        },
+        {
+            title: "ყველა ბავშვი",
+            icon: <SVG10 />,
+            path: "/children"
+        },
+        {
+            title: "პერსონალი",
+            icon: <SVG10 />,
+            path: "/staff"
+        },
+        {
+            title: "აქტივობები",
+            icon: <SVG6 />,
+            path: "/activities"
+        },
+        {
+            title: "კალენდარი",
+            icon: <SVG4 />,
+            path: "/calendar"
+        },
+        {
+            title: "შეტყობინებები",
+            icon: <SVG8 />,
+            path: "/notifications"
+        },
+        {
+            title: "პარამეტრები",
+            icon: <SVG25 />,
+            path: "/settings"
+        }
+    ]
+
+    const neededPanel = role === "მშობელი" ? parentPanelsArr : role === "მასწავლებელი" ? teacherPanelsArr : role === "ადმინისტრატორი" ? adminPanelsArr : []
 
     const [showUserSettings, setShowUserSettings] = useState(false)
 
@@ -74,7 +150,9 @@ export default function Header() {
                     <button className="flex items-center justify-center duration-300 transition-all rounded-[8px] hover:bg-[#f1f5f9] h-[36px] p-[0_12px] cursor-pointer">
                         <img src="/assets/SVG17.svg" className="w-[16px] h-[16px]" alt="" />
                     </button>
-                    <img src="/assets/SVG.svg" alt="" />
+                    <button className="flex items-center justify-center duration-300 transition-all rounded-[8px] hover:bg-[#f1f5f9] h-[36px] p-[0_12px] cursor-pointer">
+                        <img src="/assets/SVG.svg" alt="" />
+                    </button>
                     {role === "სტუმარი" && <>
                         <button onClick={() => navigate("/login")} className="text-[1.4rem] font-[500] text-[#0f172a] duration-300 transition-all rounded-[8px] hover:bg-[#f1f5f9] h-[36px] p-[0_12px] cursor-pointer">
                             შესვლა
@@ -126,15 +204,20 @@ export default function Header() {
                 </div>
             </div>
             <div className="flex items-center justify-center gap-[40px]">
-                {parentPanelsArr.map((item, index) => {
-                    return <button onClick={() => setSelectedPanel(item.title)} key={index} className={`flex items-center gap-[8px] curspor-pointer cursor-pointer hover:bg-[#f1f5f9] transition-all duration-300 p-[8px_12px] rounded-[8px] ${selectedPanel === item.title && "bg-[#0f172a] hover:bg-[#0f172a]!"}`}>
-                        {React.cloneElement(item.icon, {
-                            stroke: selectedPanel === item.title ? "#FFFFFF" : "currentColor",
-                            className: "transition-all duration-300"
-                        })}
-                        <h5 className={`text-[1.4rem] leading-[20px] text-[#020817] font-[500] ${selectedPanel === item.title && "text-[#FFFFFF]"}`}>{item.title}</h5>
-                    </button>
-                })}
+                {role !== "სტუმარი" &&
+                    neededPanel.map((item, index) => {
+                        return <button onClick={() => {
+                            setSelectedPanel(item.title)
+                            navigate(item.path)
+                        }} key={index} className={`flex items-center gap-[8px] curspor-pointer cursor-pointer hover:bg-[#f1f5f9] transition-all duration-300 p-[8px_12px] rounded-[8px] ${selectedPanel === item.title && "bg-[#0f172a] hover:bg-[#0f172a]!"}`}>
+                            {React.cloneElement(item.icon, {
+                                stroke: selectedPanel === item.title ? "#FFFFFF" : "currentColor",
+                                className: "transition-all duration-300 w-[16px] h-[16px]"
+                            })}
+                            <h5 className={`text-[1.4rem] leading-[20px] text-[#020817] font-[500] ${selectedPanel === item.title && "text-[#FFFFFF]"}`}>{item.title}</h5>
+                        </button>
+                    })
+                }
             </div>
         </header>)
 }
