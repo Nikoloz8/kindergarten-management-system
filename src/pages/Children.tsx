@@ -34,7 +34,7 @@ export default function Children() {
               <h4 className="font-[500] text-[1.4rem]">ნინო ღლონტი</h4>
             </div>
             <div className="flex w-full justify-between mt-[8px]">
-              <button className="w-[48%] flex justify-center items-center gap-[8px] border-[1px] border-solid border-[#e2e8f0] hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
+              <button className="w-[48%] flex justify-center items-center gap-[8px] border-[1px] border-solid border-[#e2e8f0] hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a] transition-all duration-300">
                 <SVG10 stroke="#0f172a" />
                 პროფილი
               </button>
