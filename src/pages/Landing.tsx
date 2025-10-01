@@ -3,7 +3,6 @@ import ChildCard from "../components/landing/ChildCard"
 import FutureEventsCard from "../components/landing/FutureEventsCard"
 import QuickActionsButton from "../components/landing/QuickActionsButton"
 import Stats from "../components/landing/Stats"
-
 import { useNavigate } from "react-router-dom"
 import ProgramCard from "../components/landing/ProgramCard"
 import index from "../utils"
@@ -65,7 +64,7 @@ export default function Landing() {
 
 
 
-    const { getCurrentUser } = index()
+    const { getCurrentUser, getAllUser } = index()
     const currentUser = getCurrentUser()
     let role = currentUser.role
     if (!role) role = "Guest"
@@ -88,6 +87,7 @@ export default function Landing() {
         }
     ]
 
+    const parents = getAllUser().filter((e: any) => e.role === "Parent")
 
     return (
         <div className="w-[1290px]">
@@ -131,17 +131,26 @@ export default function Landing() {
                     </div>
                 </div>
             </section>
-            <section className="w-full mt-[32px] flex justify-between">
-                {role === "მშობელი" &&
+            <section className="w-full m-[32px_0] flex justify-between">
+                {role === "მშობელი" ?
                     <>
                         <Stats title="შეტყობინებები" count="(3)" stat="მასწავლებლებისგან" />
                     </>
+                    : role === "Admin" ?
+                        <>
+                            <Stats title="სულ ბავშვები" count={parents.length} stat="1 ჯგუფში" />
+                            <Stats title="დღეს დამსწრე" count={parents.length} stat="1% დასწრება" />
+                            <Stats title="მასწავლებლები" count={parents.length} stat="ყველა აქტიური" />
+                            <Stats title="ღონისძიებები" count={parents.length} stat="ამ თვეში" />
+                        </>
+                        :
+                        <></>
                 }
             </section>
             {role === "Admin" &&
                 <div className="flex gap-[24px] w-full">
                     <div className="flex flex-col gap-[24px]">
-                        <section className="border-[1px] max-w-[800px] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] w-full">
+                        <section className="border-[1px] max-w-[800px] border-solid  shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] w-full">
                             <div className="flex justify-between">
                                 <div className="flex gap-[16px] items-center text-[2.4rem] font-[600] leading-[24px] text-[#020817]">
                                     <img src="/assets/SVG10.svg" alt="" />
@@ -149,16 +158,16 @@ export default function Landing() {
                                         კლასის ბავშვები
                                     </span>
                                 </div>
-                                <button className="p-[8px_16px] border-[1px] border-solid border-[#E2E8F0] rounded-[12px] cursor-pointer font-[500] text-[1.4rem] leading-[20px] tracking-[-0.6px] text-[#020817]">ყველას ნახვა</button>
+                                <button onClick={() => navigate("/children")} className="p-[8px_16px] border-[1px] border-solid  rounded-[12px] cursor-pointer font-[500] text-[1.4rem] leading-[20px] tracking-[-0.6px] text-[#020817]">ყველას ნახვა</button>
                             </div>
                             <div className="flex gap-[16px] flex-wrap justify-center">
-                                <ChildCard />
-                                <ChildCard />
-                                <ChildCard />
+                                {parents.map((e: any, i: number) => {
+                                    return <ChildCard childAge={e.childAge} key={i} childName={e.childFullName} />
+                                })}
                             </div>
                         </section>
                         <div className="flex w-full gap-[24px]">
-                            <section className="border-[1px] flex flex-col gap-[12px] border-solid border-[#E2E8F0] p-[24px] w-[400px]">
+                            <section className="border-[1px] flex flex-col gap-[12px] border-solid  p-[24px] w-[400px]">
                                 <span className="flex gap-[8px] items-center">
                                     <img src="/assets/SVG15.svg" alt="" />
                                     <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">მომავალი ღონისძიებები</h4>
@@ -166,12 +175,12 @@ export default function Landing() {
                                 <FutureEventsCard />
                                 <FutureEventsCard />
                                 <FutureEventsCard />
-                                <button className="flex justify-center gap-[16px] border-[1px] border-solid border-[#E2E8F0] p-[12px_0] rounded-[8px] cursor-pointer items-center">
+                                <button className="flex justify-center gap-[16px] border-[1px] border-solid  p-[12px_0] rounded-[8px] cursor-pointer items-center">
                                     <img src="/assets/SVG4.svg" alt="" />
                                     <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">კალენდრის ნახვა</h4>
                                 </button>
                             </section>
-                            <section className="border-[1px] flex flex-col gap-[12px] border-solid border-[#E2E8F0] p-[24px] w-[376px]">
+                            <section className="border-[1px] flex flex-col gap-[12px] border-solid  p-[24px] w-[376px]">
                                 <h4 className="text-[1.4rem] font-[600] tracking-[-0.35px] text-[#020817]">სწრაფი მოქმედებები</h4>
                                 <QuickActionsButton svg={SVG5} route="" text="ახალი შეტყობინება" />
                                 <QuickActionsButton svg={SVG4} route="" text="ღონისძიების დამატება" />
@@ -179,7 +188,7 @@ export default function Landing() {
                             </section>
                         </div>
                     </div>
-                    <section className="flex flex-col gap-[12px] max-h-[890px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-[1px] border-solid border-[#E2E8F0] p-[24px] flex-1 overflow-y-auto">
+                    <section className="flex flex-col gap-[12px] max-h-[684.5px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-[1px] border-solid  p-[24px] flex-1 overflow-y-auto">
                         <span className="flex gap-[8px] items-center">
                             <img src="/assets/SVG13.svg" alt="" />
                             <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">დღევანდელი აქტივობები</h4>
@@ -192,10 +201,13 @@ export default function Landing() {
                         <ActivityCard />
                         <ActivityCard />
                         <ActivityCard />
+                        <ActivityCard />
+                        <ActivityCard />
+                        <ActivityCard />
                     </section>
                 </div>
             }
-            <section className="w-full mt-[32px] bg-[#f9fafa] p-[24px] flex flex-col gap-[24px] border-[1px] border-solid border-[#e2e8f0]">
+            <section className="w-full mt-[32px] bg-[#f9fafa] p-[24px] flex flex-col gap-[24px] border-[1px] border-solid ">
                 <div className="flex flex-col items-center justify-center">
                     <h3 className="text-[2.4rem] font-[600] text-[#020817]">ჩვენი პროგრამები</h3>
                     <h5 className="text-[1.6rem] tracking-[-0.45px] text-[#64748b]">ბავშვების ყოვლისმომცველი განვითარება</h5>
@@ -209,7 +221,7 @@ export default function Landing() {
             <div className="flex gap-[24px] mt-[24px] w-full">
                 <div className="flex w-full justify-between">
 
-                    <section className="border-[1px] w-[49%] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
+                    <section className="border-[1px] w-[49%] border-solid  shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
                         <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">კონტაქტი</h4>
                         <div className="flex flex-col gap-[16px]">
                             {contactInfo.map((e, i) => {
@@ -223,7 +235,7 @@ export default function Landing() {
                             })}
                         </div>
                     </section>
-                    <section className="border-[1px] w-[49%] border-solid border-[#E2E8F0] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
+                    <section className="border-[1px] w-[49%] border-solid  shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px]">
                         <h4 className="text-[1.8rem] font-[600] pb-[7px] tracking-[-0.45px] text-[#020817]">სამუშაო საათები</h4>
                         <div className="flex flex-col gap-[12px]">
                             <ul className="flex flex-col gap-[16px]">
@@ -235,7 +247,7 @@ export default function Landing() {
                                 })}
                             </ul>
                             <span className="w-full h-[1px] bg-[#ced3db]"></span>
-                            <button className="flex justify-center gap-[16px] border-[1px] border-solid border-[#E2E8F0] p-[12px_0] rounded-[8px] cursor-pointer items-center">
+                            <button className="flex justify-center gap-[16px] border-[1px] border-solid  p-[12px_0] rounded-[8px] cursor-pointer items-center">
                                 <SVG4 stroke="#020817" />
                                 <h4 className="font-[500] text-[1.4rem] leading-[20px] text-[#020817]">ვიზიტის დაჯავშნა</h4>
                             </button>

@@ -25,7 +25,7 @@ export default function Login() {
     }
 
     return (
-        <div className="flex flex-col gap-[24px] p-[24px] max-w-[440px] m-[100px_0] border-[1px] border-solid border-[#e2e8f0]">
+        <div className="flex flex-col gap-[24px] p-[24px] max-w-[440px] m-[100px_0] border-[1px] border-solid ">
             <div className="flex flex-col gap-[4px] items-center">
                 <h1 className="font-[700] text-[3rem] leading-[36px] text-center text-[#020817]">კეთილი იყოს თქვენი დაბრუნება</h1>
                 <h3 className="text-[1.4rem] leading-[20px] text-[#64748b]">შედით თქვენს საბავშვო ბაღის ანგარიშზე</h3>

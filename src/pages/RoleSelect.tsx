@@ -76,7 +76,7 @@ export default function RoleSelect() {
         })}
       </div>
       <div className="flex gap-[16px]">
-        <button onClick={() => navigate("/")} className="text-[1.4rem] font-[500] border-[1px] border-solid border-[#e2e8f0] text-[#0f172a] duration-300 transition-all hover:bg-[#f1f5f9] h-[36px] p-[8px_16px] cursor-pointer">
+        <button onClick={() => navigate("/")} className="text-[1.4rem] font-[500] border-[1px] border-solid  text-[#0f172a] duration-300 transition-all hover:bg-[#f1f5f9] h-[36px] p-[8px_16px] cursor-pointer">
           მთავარ გვერდზე დაბრუნება
         </button>
         {selectedRole && <button onClick={selectedRole === "მშობელი" ? () => navigate(`/register/${selectedRole}`) : () => {navigate("/login")}} className="text-[1.4rem] font-[500] text-[#FFFFFF] duration-300 transition-all bg-[#0f172a] hover:bg-[#272e3f] h-[36px] p-[8px_16px] cursor-pointer">

@@ -12,6 +12,12 @@ export default function index() {
         return roleEng === "Parent" ? "მშობელი" : roleEng === "Admin" ? "ადმინისტრატორი" : roleEng === "Teacher" ? "მასწავლებელი" : "სტუმარი"
     }
 
+    const getAllUser = () => {
+        const stringedUser = localStorage.getItem("users")
+        if(!stringedUser) return []
+        return JSON.parse(stringedUser!)
+    }
 
-    return { getRole, getCurrentUser }
+
+    return { getRole, getCurrentUser, getAllUser }
 }

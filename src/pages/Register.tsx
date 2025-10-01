@@ -16,7 +16,7 @@ export default function Register() {
     const { getRole } = index()
 
     const role = getRole()
-    
+
     if (!role) return
 
     const handleRegister = () => {
@@ -31,7 +31,10 @@ export default function Register() {
                 email: watch().email,
                 password: watch().password,
                 childFullName: watch().childFullName,
-                childAge: watch().childAge
+                childAge: watch().childAge,
+                id: Math.floor(Math.random() * 1000000),
+                phone: watch().phoneNumber,
+                visibleProfile: true,
             }
         )
 
@@ -41,7 +44,7 @@ export default function Register() {
     }
 
     return (
-        <div className="flex flex-col gap-[24px] p-[24px] border-[1px] border-solid border-[#e2e8f0]">
+        <div className="flex flex-col gap-[24px] p-[24px] border-[1px] border-solid ">
             <div className="flex flex-col gap-[4px] items-center">
                 <h1 className="font-[700] text-[3rem] leading-[36px] text-[#020817]">ანგარიშის შექმნა</h1>
                 <h3 className="text-[1.4rem] leading-[20px] text-[#64748b]">შემოუერთდით როგორც { }</h3>
@@ -60,6 +63,10 @@ export default function Register() {
                     <div className="flex flex-col gap-[8px]">
                         <label htmlFor="email" className={`${labelStyle}`}>ელ-ფოსტა</label>
                         <input type="text" {...register("email")} placeholder="nikoloztevdoradze08@gmail.com" className={`${inputStyle}`} id="email" />
+                    </div>
+                    <div className="flex flex-col gap-[8px]">
+                        <label htmlFor="phoneNumber" className={`${labelStyle}`}>ტელეფონის ნომერი</label>
+                        <input type="text" {...register("phoneNumber")} placeholder="+995 577 21 36 45" className={`${inputStyle}`} id="phoneNumber" />
                     </div>
                     <div className="flex flex-col gap-[8px]">
                         <label htmlFor="password" className={`${labelStyle}`}>პაროლი</label>

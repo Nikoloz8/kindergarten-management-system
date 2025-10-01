@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import index from "../../utils"
 import SVG19 from "../../../public/assets/SVG19.svg?react"
 import SVG10 from "../../../public/assets/SVG10.svg?react"
@@ -8,7 +8,7 @@ import SVG8 from "../../../public/assets/SVG8.svg?react"
 import SVG26 from "../../../public/assets/SVG26.svg?react"
 import SVG25 from "../../../public/assets/SVG25.svg?react"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 export default function Header() {
 
     const { getRole, getCurrentUser } = index()
@@ -19,8 +19,36 @@ export default function Header() {
 
     const navigate = useNavigate()
     const role = getRole()
+    const location = useLocation().pathname
+
+    const panels: Record<string, string> = {
+        "/": "მთავარი",
+        "/choose-role": "როლის არჩევა",
+        "/register/:role": "რეგისტრაცია",
+        "/login": "შესვლა",
+        "/children": "ყველა ბავშვი",
+        "/staff": "პერსონალი",
+        "/activities": "აქტივობები",
+        "/calendar": "კალენდარი",
+        "/settings": "პარამეტრები",
+        "/notifications": "შეტყობინებები"
+    }
+
+    const getSelectedPanelFromParams = () => {
+        const path = Object.keys(panels).find(p =>
+            p.includes(":") ? location.startsWith(p.split("/:")[0]) : location === p
+        )
+
+        return (path ? panels[path] : "უცნობი");
+    }
 
     const [selectedPanel, setSelectedPanel] = useState("მთავარი")
+
+    useEffect(() => {
+        setSelectedPanel(getSelectedPanelFromParams())
+    })
+
+
     const parentPanelsArr = [
         {
             title: "მთავარი",
@@ -50,9 +78,6 @@ export default function Header() {
     ]
 
     const teacherPanelsArr = [
-
-        //ჩასასწორებელი
-
         {
             title: "მთავარი",
             icon: <SVG19 />,
@@ -164,13 +189,13 @@ export default function Header() {
                     }
                     {
                         role !== "სტუმარი" &&
-                        <button onClick={() => setShowUserSettings(!showUserSettings)} className="flex items-center p-[4px_12px] gap-[8px] hover:bg-[#f1f5f9] rounded-[8px] relative">
+                        <div onClick={() => setShowUserSettings(!showUserSettings)} className="flex items-center p-[4px_12px] gap-[8px] hover:bg-[#f1f5f9] rounded-[8px] relative">
                             <span className="flex items-center justify-center rounded-full text-[1.2rem] bg-[#0f172a] text-white p-[4px]">
                                 {currentUser.firstname[0]}
                                 {currentUser.lastname[0]}
                             </span>
                             <img src="/assets/SVG23.svg" className={`transition-transform duration-300 ${showUserSettings ? "rotate-180" : "rotate-0"}`} alt="" />
-                            <div className={`absolute flex-col border-[1px] border-solid border-[#e2e8f0] bg-[#FFFFFF] rounded-[8px] top-[40px] right-0 p-[4px] z-10 flex opacity-0 pointer-events-none ${showUserSettings && "opacity-100! pointer-events-auto!"} transition-all duration-300`}>
+                            <div className={`absolute flex-col border-[1px] border-solid  bg-[#FFFFFF] rounded-[8px] top-[40px] right-0 p-[4px] z-10 flex opacity-0 pointer-events-none ${showUserSettings && "opacity-100! pointer-events-auto!"} transition-all duration-300`}>
                                 <div className="flex relative flex-col gap-[4px] p-[6px] items-start">
                                     <h3 className="text-[1.4rem] font-[500] leading-none">
                                         {currentUser.firstname} {currentUser.lastname}
@@ -199,7 +224,7 @@ export default function Header() {
                                     გამოსვლა
                                 </button>
                             </div>
-                        </button>
+                        </div>
                     }
                 </div>
             </div>

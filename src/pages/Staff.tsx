@@ -22,12 +22,12 @@ export default function Staff() {
             მასწავლებლის რეგისტრაცია
           </button>
         </div>
-        <div className="w-full p-[16px] border-[1px] border-solid border-[#e2e8f0] flex gap-[16px]">
-          <label htmlFor="search" className="p-[8px_12px] rounded-[8px] border-[1px] border-solid border-[#e2e8f0] flex gap-[12px] items-center w-full">
+        <div className="w-full p-[16px] border-[1px] border-solid  flex gap-[16px]">
+          <label htmlFor="search" className="p-[8px_12px] rounded-[8px] border-[1px] border-solid  flex gap-[12px] items-center w-full">
             <SVG29 className="stroke-[#64748b] h-[16px] w-[16px]" />
             <input type="text" className="outline-none text-[1.4rem] " placeholder="თანამშრომლის ძებნა..." id="search" />
           </label>
-          <button className="p-[8px_16px] border-[1px] border-solid border-[#e2e8f0] flex items-center gap-[16px] cursor-pointer hover:bg-[#f1f5f9] transition-all duration-200 text-[1.4rem] font-[500] ">
+          <button className="p-[8px_16px] border-[1px] border-solid  flex items-center gap-[16px] cursor-pointer hover:bg-[#f1f5f9] transition-all duration-200 text-[1.4rem] font-[500] ">
             <SVG30 className="stroke-[#272f40] h-[16px] w-[16px] " />
             ფილტრები
           </button>
@@ -39,7 +39,7 @@ export default function Staff() {
           <StaffStatCard svg={SVG10} title="სულ პერსონალი" info="5" />
         </div>
         <div className="flex gap-[24px] w-full">
-          <div className="border-[1px] border-solid border-[#e2e8f0] w-[49.3%] p-[24px] flex gap-[16px]">
+          <div className="border-[1px] border-solid  w-[49.3%] p-[24px] flex gap-[16px]">
             <span className="w-[64px] h-[64px] rounded-full bg-[#eaeaea]"></span>
             <div className="flex flex-col gap-[12px] w-full">
               <div className="flex flex-col gap-[4px]">
@@ -65,14 +65,14 @@ export default function Staff() {
                 <h5 className="text-[1.4rem] text-[#64748b]">
                   სპეციალიზაცია:
                 </h5>
-                <span className="p-[2px_10px] border-[1px] border-solid border-[#e2e8f0] rounded-[999px] font-[600] text-[1.2rem]">მათემატიკა</span>
+                <span className="p-[2px_10px] border-[1px] border-solid  rounded-[999px] font-[600] text-[1.2rem]">მათემატიკა</span>
               </div>
               <div className="flex gap-[8px] w-full">
-                <button className="w-[49%] flex justify-center items-center gap-[8px] border-[1px] border-solid border-[#e2e8f0] hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
+                <button className="w-[49%] flex justify-center items-center gap-[8px] border-[1px] border-solid  hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
                   <SVG31 className="stroke-[#0f172a] w-[16px]" />
                   პროფილი
                 </button>
-                <button className="w-[49%] flex justify-center items-center gap-[8px] border-[1px] border-solid border-[#e2e8f0] hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
+                <button className="w-[49%] flex justify-center items-center gap-[8px] border-[1px] border-solid  hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
                   <SVG4 className="stroke-[#0f172a] w-[16px]" />
                   განრიგი
                 </button>

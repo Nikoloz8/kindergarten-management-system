@@ -10,8 +10,8 @@ export default function ActivityCard() {
                         სადილი 🍽️
                     </h5>
                     <div className="flex gap-[8px]">
-                        <span className="p-[4px_12px] rounded-[999px] border-[#E2E8F0] border-[1px] border-solid text-[1.2rem] font-[700] leading-[16px] text-[#020817]">12:30</span>
-                        <span className="p-[4px_12px] rounded-[999px] border-[#E2E8F0] border-[1px] border-solid text-[1.2rem] font-[700] leading-[16px] text-[#020817]">25 წუთი</span>
+                        <span className="p-[4px_12px] rounded-[999px] border-[1px] border-solid text-[1.2rem] font-[700] leading-[16px] text-[#020817]">12:30</span>
+                        <span className="p-[4px_12px] rounded-[999px] border-[1px] border-solid text-[1.2rem] font-[700] leading-[16px] text-[#020817]">25 წუთი</span>
                     </div>
                 </div>
                 <p className="text-[1.4rem] font-[400] leading-[20px] text-[#64748B]">ნიკამ მთელი ბლეტი შეჭამა და კიდევ მოითხოვა!</p>

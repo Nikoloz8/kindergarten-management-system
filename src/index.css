@@ -4,4 +4,8 @@
   html {
     font-size: 10px !important;
   }
+
+  * {
+    border-color: #e2e8f0;
+  }
 }
