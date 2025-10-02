@@ -209,11 +209,11 @@ export default function Header() {
                                 </div>
                                 <span className="w-full h-[1px] bg-[#f1f5f9] m-[4px_0]"></span>
                                 <div className="flex flex-col">
-                                    <button className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] ">
+                                    <button onClick={() => navigate("/profile")} className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] ">
                                         <img className="h-[16px] w-[16px]" src="/assets/SVG24.svg" alt="" />
                                         პროფილი
                                     </button>
-                                    <button className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] ">
+                                    <button onClick={() => navigate("/settings")} className="p-[6px_8px] w-full hover:bg-[#f1f5f9] flex gap-[8px] items-center text-[1.4rem] ">
                                         <img className="h-[16px] w-[16px]" src="/assets/SVG25.svg" alt="" />
                                         პარამეტრები
                                     </button>

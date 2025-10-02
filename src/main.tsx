@@ -13,6 +13,7 @@ import Activities from './pages/Activities'
 import Calendar from './pages/Calendar'
 import Settings from './pages/Settings'
 import Notifications from './pages/Notifications'
+import Profile from './pages/Profile'
 
 const router = createBrowserRouter([{
   element: <MainLayout />,
@@ -61,6 +62,10 @@ const router = createBrowserRouter([{
     {
       element: <Notifications />,
       path: "/notifications"
+    },
+    {
+      element: <Profile />,
+      path: "/profile"
     }
   ]
 }])
