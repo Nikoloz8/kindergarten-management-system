@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import SVG24 from "../../public/assets/SVG24.svg?react"
 import SVG38 from "../../public/assets/SVG38.svg?react"
+import SVG39 from "../../public/assets/SVG39.svg?react"
 import { useForm } from "react-hook-form"
 import index from "../utils"
 
@@ -43,6 +44,32 @@ export default function Profile() {
         }
     }
 
+    const [image, setImage] = useState<string | null>(currentUser.profilePhoto || null)
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0]
+            const url = URL.createObjectURL(file)
+            setImage(url)
+            const updatedUser = {
+                ...currentUser,
+                profilePhoto: url
+            }
+            localStorage.setItem("currentUser", JSON.stringify(updatedUser))
+            const users = JSON.parse(localStorage.getItem("users") || "[]")
+            const updatedUsers = users.map((user: any) =>
+                user.id === currentUser.id ? updatedUser : user
+            )
+            localStorage.setItem("users", JSON.stringify(updatedUsers))
+        }
+    }
+
+    const inputRef = useRef<HTMLInputElement | null>(null)
+
+    const handleButtonClick = () => {
+        inputRef.current?.click()
+    }
+
     return (
         <div className="w-full flex justify-center">
             <div className="flex flex-col gap-[24px] w-[1290px]">
@@ -53,7 +80,26 @@ export default function Profile() {
                 <div className="border-[1px] border-solid flex flex-col gap-[16px] p-[24px]">
                     <h2 className="text-[#020817] mb-[8px] text-[2rem] font-[600] flex items-center gap-[8px]">
                         <SVG24 className="w-[20px]" />
-                        პროფილის ინფორმაცია
+                        პროფილის ფოტო
+                    </h2>
+                    <div className="flex gap-[24px] items-center">
+                        <input type="file" ref={inputRef} accept="image/*" className="hidden" onChange={handleFileChange} />
+                        {
+                            !image && !currentUser.profilePhoto ?
+                                <div className="w-[96px] h-[96px] text-[2.4rem] text-[#f8fafc] bg-[#0f172a] rounded-full flex items-center justify-center">
+                                    {currentUser.firstname[0].toUpperCase()}{currentUser.lastname[0].toUpperCase()}
+                                </div> : <img src={image!} alt="Preview" className="w-[96px] h-[96px] rounded-full" />
+                        }
+                        <button onClick={() => handleButtonClick()} className="flex gap-[8px] items-center rounded-[8px] border-[1px] border-solid p-[4px_12px] text-[1.4rem] font-[500] hover:bg-[#f1f5f9] cursor-pointer duration-300 transition-all">
+                            <SVG39 className="w-[16px] stroke-[#0f172a]" />
+                            ფოტოს ატვირთვა
+                        </button>
+                    </div>
+                </div>
+                <div className="border-[1px] border-solid flex flex-col gap-[16px] p-[24px]">
+                    <h2 className="text-[#020817] mb-[8px] text-[2rem] font-[600] flex items-center gap-[8px]">
+                        <SVG24 className="w-[20px]" />
+                        პირადი ინფორმაცია
                     </h2>
                     <div className="flex gap-[16px]">
                         <div className="flex flex-col gap-[8px] w-[49%]">
