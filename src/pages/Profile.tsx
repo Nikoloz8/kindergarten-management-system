@@ -45,22 +45,27 @@ export default function Profile() {
     }
 
     const [image, setImage] = useState<string | null>(currentUser.profilePhoto || null)
-
+    
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0]
-            const url = URL.createObjectURL(file)
-            setImage(url)
-            const updatedUser = {
-                ...currentUser,
-                profilePhoto: url
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                const base64 = reader.result as string
+                setImage(base64)
+
+                const updatedUser = {
+                    ...currentUser,
+                    profilePhoto: base64
+                }
+                localStorage.setItem("currentUser", JSON.stringify(updatedUser))
+                const users = JSON.parse(localStorage.getItem("users") || "[]")
+                const updatedUsers = users.map((user: any) =>
+                    user.id === currentUser.id ? updatedUser : user
+                )
+                localStorage.setItem("users", JSON.stringify(updatedUsers))
             }
-            localStorage.setItem("currentUser", JSON.stringify(updatedUser))
-            const users = JSON.parse(localStorage.getItem("users") || "[]")
-            const updatedUsers = users.map((user: any) =>
-                user.id === currentUser.id ? updatedUser : user
-            )
-            localStorage.setItem("users", JSON.stringify(updatedUsers))
+            reader.readAsDataURL(file)
         }
     }
 
@@ -88,7 +93,8 @@ export default function Profile() {
                             !image && !currentUser.profilePhoto ?
                                 <div className="w-[96px] h-[96px] text-[2.4rem] text-[#f8fafc] bg-[#0f172a] rounded-full flex items-center justify-center">
                                     {currentUser.firstname[0].toUpperCase()}{currentUser.lastname[0].toUpperCase()}
-                                </div> : <img src={image!} alt="Preview" className="w-[96px] h-[96px] rounded-full" />
+                                </div> :
+                                <img src={image!} alt="Preview" className="w-[96px] h-[96px] rounded-full" />
                         }
                         <button onClick={() => handleButtonClick()} className="flex gap-[8px] items-center rounded-[8px] border-[1px] border-solid p-[4px_12px] text-[1.4rem] font-[500] hover:bg-[#f1f5f9] cursor-pointer duration-300 transition-all">
                             <SVG39 className="w-[16px] stroke-[#0f172a]" />
