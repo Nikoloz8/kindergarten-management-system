@@ -6,18 +6,21 @@ import SVG31 from "../../public/assets/SVG31.svg?react"
 import SVG32 from "../../public/assets/SVG32.svg?react"
 import SVG33 from "../../public/assets/SVG33.svg?react"
 import SVG4 from "../../public/assets/SVG4.svg?react"
-
 import StaffStatCard from "../components/panelComponents/staff/StaffStatCard"
+import { useNavigate } from "react-router-dom"
 export default function Staff() {
+
+  const navigate = useNavigate()
+
   return (
     <div className="w-full flex justify-center">
       <div className="flex flex-col gap-[24px] w-[1290px]">
         <div className="flex w-full justify-between items-center">
           <div className="flex flex-col gap-[8px]">
             <h1 className="text-[#020817] text-[3rem] font-[700]">პერსონალის მართვა</h1>
-            <h2 className="text-[#64748b] text-[1.6rem]">თანამშრომლების ინფორმაცია და განრიგი</h2>
+            <p className="text-[#64748b] text-[1.6rem]">თანამშრომლების ინფორმაცია და განრიგი</p>
           </div>
-          <button className="flex gap-[8px] p-[8px_16px] bg-[#0f172a] text-[#ffffff] hover:scale-[1.05] font-[500] text-[1.4rem] items-center">
+          <button onClick={() => navigate("/teacher-registration")} className="flex gap-[8px] p-[8px_16px] bg-[#0f172a] text-[#ffffff] hover:scale-[1.05] font-[500] text-[1.4rem] items-center cursor-pointer transition-all duration-300">
             <SVG28 stroke="#FFFFFF" className="w-[16px] h-[16px]" />
             მასწავლებლის რეგისტრაცია
           </button>

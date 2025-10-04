@@ -14,6 +14,7 @@ import Calendar from './pages/Calendar'
 import Settings from './pages/Settings'
 import Notifications from './pages/Notifications'
 import Profile from './pages/Profile'
+import TeacherRegistration from './pages/TeacherRegistration'
 
 const router = createBrowserRouter([{
   element: <MainLayout />,
@@ -66,6 +67,10 @@ const router = createBrowserRouter([{
     {
       element: <Profile />,
       path: "/profile"
+    },
+    {
+      element: <TeacherRegistration />,
+      path: "/teacher-registration"
     }
   ]
 }])

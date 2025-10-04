@@ -80,7 +80,7 @@ export default function Profile() {
             <div className="flex flex-col gap-[24px] w-[1290px]">
                 <div className="flex flex-col gap-[8px]">
                     <h1 className="text-[#020817] text-[3rem] font-[700]">ჩემი პროფილი</h1>
-                    <h2 className="text-[#64748b] text-[1.6rem]">პირადი ინფორმაციის მართვა</h2>
+                    <p className="text-[#64748b] text-[1.6rem]">პირადი ინფორმაციის მართვა</p>
                 </div>
                 <div className="border-[1px] border-solid flex flex-col gap-[16px] p-[24px]">
                     <h2 className="text-[#020817] mb-[8px] text-[2rem] font-[600] flex items-center gap-[8px]">
