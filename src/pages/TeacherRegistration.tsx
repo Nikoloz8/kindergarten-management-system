@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useOutletContext } from "react-router-dom"
 import SVG40 from "../../public/assets/SVG40.svg?react"
 import SVG41 from "../../public/assets/SVG41.svg?react"
 import styles from "../shared/styles"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function TeacherRegistration() {
 
@@ -19,6 +19,39 @@ export default function TeacherRegistration() {
         } else {
             setCheckedSubjects([...checkedSubjects, subject])
         }
+    }
+
+    const { register, reset, watch } = useOutletContext<TLayoutContext>()
+
+    useEffect(() => {
+        reset()
+    }, [])
+
+    console.log(watch())
+
+    const handleRegisterTeacher = () => {
+        const users = localStorage.getItem("users")
+        if (!users) return
+        const newUsers = JSON.parse(users)
+        newUsers.push(
+            {
+                role: "Teacher",
+                firstname: watch().firstname,
+                lastname: watch().lastname,
+                email: watch().email,
+                password: watch().password,
+                phoneNumber: watch().phone,
+                subjects: checkedSubjects,
+                experience: watch().experience,
+                education: watch().education,
+                address: watch().address,
+                additionalNotes: watch().additionalNotes,
+                id: Math.floor(Math.random() * 1000000),
+                visibleProfile: true,
+            }
+        )
+        localStorage.setItem("users", JSON.stringify(newUsers))
+        navigate("/staff")
     }
 
     return (
@@ -40,25 +73,25 @@ export default function TeacherRegistration() {
                         <h2 className="text-[#020817] text-[2rem] font-[600]">პირადი ინფორმაცია</h2>
                         <p className="text-[#64748b] text-[1.6rem]">შეავსეთ ყველა საჭირო ველი პედაგოგის რეგისტრაციისთვის</p>
                     </div>
-                    <form action="" className="flex flex-col gap-[24px] w-full">
+                    <form onSubmit={(e) => e.preventDefault()} action="" className="flex flex-col gap-[24px] w-full">
                         <div className="flex gap-[24px] w-full">
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="firstname" className={labelStyle}>სახელი</label>
-                                <input type="text" className={`${inputStyle}`} placeholder="შეიყვანეთ სახელი" id="firstname" />
+                                <input type="text" {...register("firstname")} className={`${inputStyle}`} placeholder="შეიყვანეთ სახელი" id="firstname" />
                             </div>
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="lastname" className={labelStyle}>გვარი</label>
-                                <input type="text" className={`${inputStyle}`} placeholder="შეიყვანეთ გვარი" id="lastname" />
+                                <input type="text" {...register("lastname")} className={`${inputStyle}`} placeholder="შეიყვანეთ გვარი" id="lastname" />
                             </div>
                         </div>
                         <div className="flex gap-[24px] w-full">
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="email" className={labelStyle}>ელ-ფოსტა</label>
-                                <input type="text" className={`${inputStyle}`} placeholder="teacher@example.com" id="email" />
+                                <input type="text" {...register("email")} className={`${inputStyle}`} placeholder="teacher@example.com" id="email" />
                             </div>
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="phone" className={labelStyle}>ტელეფონი</label>
-                                <input type="text" className={`${inputStyle}`} placeholder="+995 XXX XXX XXX" id="phone" />
+                                <input type="text" {...register("phone")} className={`${inputStyle}`} placeholder="+995 XXX XXX XXX" id="phone" />
                             </div>
                         </div>
                         <div className="flex gap-[24px] justify-between w-full">
@@ -87,27 +120,33 @@ export default function TeacherRegistration() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-[8px] w-[48.5%]">
-                                <label htmlFor="experience" className={labelStyle}>გამოცდილება (წლები)</label>
-                                <input type="number" className={`${inputStyle}`} placeholder="მაგ: 5" id="experience" />
+                            <div className="w-[48.5%] flex flex-col gap-[50px]">
+                                <div className="flex flex-col gap-[8px] w-full">
+                                    <label htmlFor="experience" className={labelStyle}>გამოცდილება (წლები)</label>
+                                    <input type="number" {...register("experience")} className={`${inputStyle}`} placeholder="მაგ: 5" id="experience" />
+                                </div>
+                                <div className="flex flex-col gap-[8px] w-full">
+                                    <label htmlFor="password" className={labelStyle}>პაროლი</label>
+                                    <input type="password" {...register("password")} className={`${inputStyle}`} placeholder="შეიყვანეთ სასურველი პაროლი" id="password" />
+                                </div>
                             </div>
                         </div>
                         <div className="flex flex-col gap-[16px]">
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="education" /*egudinashvili*/ className={labelStyle}>განათლება</label>
-                                <textarea className={`${inputStyle} min-h-[100px] max-h-[200px]`} placeholder="შეიყვანეთ ინფორმაცია განათლების შესახებ (უნივერსიტეტი, ხარისხი, წელი)" id="education" />
+                                <textarea {...register("education")} className={`${inputStyle} min-h-[100px] max-h-[200px]`} placeholder="შეიყვანეთ ინფორმაცია განათლების შესახებ (უნივერსიტეტი, ხარისხი, წელი)" id="education" />
                             </div>
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="address" className={labelStyle}>მისამართი</label>
-                                <input type="number" className={`${inputStyle}`} placeholder="შეიყვანეთ მისამართი" id="address" />
+                                <input type="text" {...register("address")} className={`${inputStyle}`} placeholder="შეიყვანეთ მისამართი" id="address" />
                             </div>
                             <div className="flex flex-col gap-[8px] w-full">
                                 <label htmlFor="additionalNotes" className={labelStyle}>დამატებითი შენიშვნები</label>
-                                <textarea className={`${inputStyle} min-h-[100px] max-h-[200px]`} placeholder="დამატებითი ინფორმაცია (არა სავალდებულო)" id="additionalNotes" />
+                                <textarea {...register("additionalNotes")} className={`${inputStyle} min-h-[100px] max-h-[200px]`} placeholder="დამატებითი ინფორმაცია (არა სავალდებულო)" id="additionalNotes" />
                             </div>
                         </div>
                         <div className="mt-[48px] flex gap-[16px]">
-                            <button className="flex gap-[8px] p-[8px_16px] bg-[#0f172a] text-[#ffffff] hover:opacity-90 font-[500] text-[1.4rem] items-center cursor-pointer transition-all duration-300">
+                            <button onClick={() => handleRegisterTeacher()} className="flex gap-[8px] p-[8px_16px] bg-[#0f172a] text-[#ffffff] hover:opacity-90 font-[500] text-[1.4rem] items-center cursor-pointer transition-all duration-300">
                                 პედაგოგის რეგისტრაცია
                             </button>
                             <button onClick={() => navigate("/staff")} className="border-[1px] border-solid p-[8px_16px] cursor-pointer hover:bg-[#f1f5f9] transition-all duration-300 flex gap-[8px] items-center font-[500] text-[1.4rem] text-[#020817]">

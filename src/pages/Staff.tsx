@@ -2,15 +2,14 @@ import SVG28 from "../../public/assets/SVG28.svg?react"
 import SVG29 from "../../public/assets/SVG29.svg?react"
 import SVG30 from "../../public/assets/SVG30.svg?react"
 import SVG10 from "../../public/assets/SVG10.svg?react"
-import SVG31 from "../../public/assets/SVG31.svg?react"
-import SVG32 from "../../public/assets/SVG32.svg?react"
-import SVG33 from "../../public/assets/SVG33.svg?react"
-import SVG4 from "../../public/assets/SVG4.svg?react"
 import StaffStatCard from "../components/panelComponents/staff/StaffStatCard"
 import { useNavigate } from "react-router-dom"
+import TeacherCard from "../components/panelComponents/staff/TeacherCard"
 export default function Staff() {
 
   const navigate = useNavigate()
+
+  const teachers = JSON.parse(localStorage.getItem("users") || "[]").filter((user: any) => user.role === "Teacher")
 
   return (
     <div className="w-full flex justify-center">
@@ -41,48 +40,11 @@ export default function Staff() {
           <StaffStatCard svg={SVG10} title="სულ პერსონალი" info="5" />
           <StaffStatCard svg={SVG10} title="სულ პერსონალი" info="5" />
         </div>
-        <div className="flex gap-[24px] w-full">
-          <div className="border-[1px] border-solid  w-[49.3%] p-[24px] flex gap-[16px]">
-            <span className="w-[64px] h-[64px] rounded-full bg-[#eaeaea]"></span>
-            <div className="flex flex-col gap-[12px] w-full">
-              <div className="flex flex-col gap-[4px]">
-                <h3 className="mb-[4px] text-[#020817] font-[600] text-[1.8rem]">ნინო ღვინაძე</h3>
-                <h4 className="mb-[4px] text-[#020817] font-[500] text-[1.6rem]">მთავარი მასწავლებელი</h4>
-                <h5 className="text-[1.4rem] text-[#64748b]">• 8 წელი</h5>
-              </div>
-              <div className="flex flex-col gap-[8px]">
-                <h5 className="text-[1.4rem] text-[#64748b] flex items-center gap-[8px]">
-                  <SVG31 className="stroke-[#64748b] w-[16px]" />
-                  nino.ghvinidze@kindergarten.ge
-                </h5>
-                <h5 className="text-[1.4rem] text-[#64748b] flex items-center gap-[8px]">
-                  <SVG32 className="stroke-[#64748b] w-[16px]" />
-                  +995 555 123 456
-                </h5>
-                <h5 className="text-[1.4rem] text-[#64748b] flex items-center gap-[8px]">
-                  <SVG33 className="stroke-[#64748b] w-[16px]" />
-                  დაწყება: 9/1/2018
-                </h5>
-              </div>
-              <div className="flex flex-col gap-[8px] items-start">
-                <h5 className="text-[1.4rem] text-[#64748b]">
-                  სპეციალიზაცია:
-                </h5>
-                <span className="p-[2px_10px] border-[1px] border-solid  rounded-[999px] font-[600] text-[1.2rem]">მათემატიკა</span>
-              </div>
-              <div className="flex gap-[8px] w-full">
-                <button className="w-[49%] flex justify-center items-center gap-[8px] border-[1px] border-solid  hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
-                  <SVG31 className="stroke-[#0f172a] w-[16px]" />
-                  პროფილი
-                </button>
-                <button className="w-[49%] flex justify-center items-center gap-[8px] border-[1px] border-solid  hover:bg-[#f1f5f9] p-[6px_12px] rounded-[8px] font-[500] text-[1.4rem] cursor-pointer text-[#0f172a]">
-                  <SVG4 className="stroke-[#0f172a] w-[16px]" />
-                  განრიგი
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {
+        teachers.map((teacher: any, index: number) => {
+          return <TeacherCard key={index} firstname={teacher.firstname} lastname={teacher.lastname} experience={teacher.experience} email={teacher.email} phone={teacher.phone} startDate={teacher.startDate} subjects={teacher.subjects} />
+        })
+        }
       </div>
     </div>
   )
