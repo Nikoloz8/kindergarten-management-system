@@ -102,12 +102,12 @@ export default function Landing() {
                             {role === "Parent" ?
                                 <SVG1 stroke="#FFFFFF" />
                                 :
-                                role === "Admin" ?
+                                role === "Administrator" ?
                                     <img src="/assets/SVG9.svg" alt="" />
                                     :
                                     <img className="w-[16px] h-[16px]" src={`/assets/SVG18.svg`} alt="" />
                             }
-                            {role === "Parent" ? "ჩემი ბავშვი" : role === "Admin" ? "ანალიტიკა" : "რეგისტრაცია"}
+                            {role === "Parent" ? "ჩემი ბავშვი" : role === "Adminsitrator" ? "ანალიტიკა" : "რეგისტრაცია"}
                         </button>
                         <button onClick={() => navigate("/login")} className="p-[8px_32px] rounded-[8px] bg-[rgba(255,255,255,0.2)] hover:bg-[rgba(255,255,255,0.3)] border-[1px] border-solid flex items-center gap-[12px] duration-300 transition-all font-[500] text-[1.4rem] group cursor-pointer text-[#FFFFFF] hover:text-[#0f172a] border-[rgba(255,255,255,0.4)] group">
                             {role === "Parent" ?
@@ -115,7 +115,7 @@ export default function Landing() {
                                     <SVG5 stroke="#FFFFFF" className="group-hover:stroke-[#0f172a] transition-all duration-300" />
                                     დაუკავშირდით მასწავლებლებს
                                 </> :
-                                role === "Admin" ?
+                                role === "Administrator" ?
                                     <>
                                         <SVG10 className="group-hover:stroke-[#0f172a]! transition-all duration-300 mt-[3px] stroke-[#FFFFFF]" />
                                         პერსონალის მართვა
@@ -136,7 +136,7 @@ export default function Landing() {
                     <>
                         <Stats title="შეტყობინებები" count="(3)" stat="მასწავლებლებისგან" />
                     </>
-                    : role === "Admin" ?
+                    : role === "Administrator" ?
                         <>
                             <Stats title="სულ ბავშვები" count={parents.length} stat="1 ჯგუფში" />
                             <Stats title="დღეს დამსწრე" count={parents.length} stat="1% დასწრება" />
@@ -147,7 +147,7 @@ export default function Landing() {
                         <></>
                 }
             </section>
-            {role === "Admin" &&
+            {role === "Administrator" &&
                 <div className="flex gap-[24px] w-full">
                     <div className="flex flex-col gap-[24px]">
                         <section className="border-[1px] max-w-[800px] border-solid  shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[24px] flex flex-col gap-[24px] w-full">

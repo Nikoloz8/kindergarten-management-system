@@ -189,8 +189,8 @@ export default function Header() {
                     }
                     {
                         role !== "სტუმარი" &&
-                        <div onClick={() => setShowUserSettings(!showUserSettings)} className="flex items-center p-[4px_12px] gap-[8px] hover:bg-[#f1f5f9] rounded-[8px] relative">
-                            <span className="flex items-center justify-center rounded-full text-[1.2rem] bg-[#0f172a] text-white p-[4px]">
+                        <div onClick={() => setShowUserSettings(!showUserSettings)} className="flex items-center p-[4px_12px] cursor-pointer gap-[8px] hover:bg-[#f1f5f9] rounded-[8px] relative">
+                            <span className="flex items-center justify-center rounded-full text-[1.2rem] text-white bg-[#0f172a] p-[4px]">
                                 {currentUser.firstname[0]}
                                 {currentUser.lastname[0]}
                             </span>

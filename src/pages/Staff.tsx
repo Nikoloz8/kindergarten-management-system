@@ -4,12 +4,12 @@ import SVG30 from "../../public/assets/SVG30.svg?react"
 import SVG10 from "../../public/assets/SVG10.svg?react"
 import StaffStatCard from "../components/panelComponents/staff/StaffStatCard"
 import { useNavigate } from "react-router-dom"
-import TeacherCard from "../components/panelComponents/staff/TeacherCard"
+import StaffCard from "../components/panelComponents/staff/StaffCard"
 export default function Staff() {
 
   const navigate = useNavigate()
 
-  const teachers = JSON.parse(localStorage.getItem("users") || "[]").filter((user: any) => user.role === "Teacher")
+  const TAD = JSON.parse(localStorage.getItem("users") || "[]").filter((user: any) => user.role === "Teacher" || user.role === "Administrator")
 
   return (
     <div className="w-full flex justify-center">
@@ -40,11 +40,15 @@ export default function Staff() {
           <StaffStatCard svg={SVG10} title="სულ პერსონალი" info="5" />
           <StaffStatCard svg={SVG10} title="სულ პერსონალი" info="5" />
         </div>
-        {
-        teachers.map((teacher: any, index: number) => {
-          return <TeacherCard key={index} firstname={teacher.firstname} lastname={teacher.lastname} experience={teacher.experience} email={teacher.email} phone={teacher.phone} startDate={teacher.startDate} subjects={teacher.subjects} />
-        })
-        }
+        <div className="flex gap-[24px] flex-col">
+          {
+            TAD.map((TOD: any, index: number) => {
+              const roleEng = TOD.role
+              const roleGeorgian = roleEng === "Parent" ? "მშობელი" : roleEng === "Administrator" ? "ადმინისტრატორი" : roleEng === "Teacher" ? "მასწავლებელი" : "სტუმარი"
+              return <StaffCard key={index} firstname={TOD.firstname} lastname={TOD.lastname} experience={TOD.experience} email={TOD.email} phone={TOD.phoneNumber} startDate={TOD.startDate} subjects={TOD.subjects} role={roleGeorgian} />
+            })
+          }
+        </div>
       </div>
     </div>
   )

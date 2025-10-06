@@ -21,9 +21,10 @@ export default function MainLayout() {
                     email: "nikoloztevdoradze08@gmail.com",
                     phoneNumber: "+995 577 19 56 39",
                     password: "admin1234",
-                    role: "Admin",
+                    role: "Administrator",
                     id: 1,
                     visibleProfile: true,
+                    startDate: new Date().toLocaleDateString(),
                 }
             ]))
         }

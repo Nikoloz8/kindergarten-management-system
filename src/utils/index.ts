@@ -9,7 +9,7 @@ export default function index() {
     const getRole = () => {
         const roleEng = getCurrentUser().role
         if (!roleEng) return
-        return roleEng === "Parent" ? "მშობელი" : roleEng === "Admin" ? "ადმინისტრატორი" : roleEng === "Teacher" ? "მასწავლებელი" : "სტუმარი"
+        return roleEng === "Parent" ? "მშობელი" : roleEng === "Administrator" ? "ადმინისტრატორი" : roleEng === "Teacher" ? "მასწავლებელი" : "სტუმარი"
     }
 
     const getAllUser = () => {

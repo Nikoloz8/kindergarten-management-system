@@ -48,6 +48,8 @@ export default function TeacherRegistration() {
                 additionalNotes: watch().additionalNotes,
                 id: Math.floor(Math.random() * 1000000),
                 visibleProfile: true,
+                startDate: new Date().toLocaleDateString(),
+                profilePhoto: null
             }
         )
         localStorage.setItem("users", JSON.stringify(newUsers))
