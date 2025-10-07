@@ -6,15 +6,15 @@ export default function index() {
         return parsedUser
     }
 
-    const getRole = () => {
-        const roleEng = getCurrentUser().role
+    const getRole = (role?: string) => {
+        const roleEng = !role ? getCurrentUser().role : role
         if (!roleEng) return
         return roleEng === "Parent" ? "მშობელი" : roleEng === "Administrator" ? "ადმინისტრატორი" : roleEng === "Teacher" ? "მასწავლებელი" : "სტუმარი"
     }
 
     const getAllUser = () => {
         const stringedUser = localStorage.getItem("users")
-        if(!stringedUser) return []
+        if (!stringedUser) return []
         return JSON.parse(stringedUser!)
     }
 

@@ -12,7 +12,7 @@ import Staff from './pages/Staff'
 import Activities from './pages/Activities'
 import Calendar from './pages/Calendar'
 import Settings from './pages/Settings'
-import Notifications from './pages/Notifications'
+import Messages from './pages/Messages'
 import Profile from './pages/Profile'
 import TeacherRegistration from './pages/TeacherRegistration'
 
@@ -61,8 +61,8 @@ const router = createBrowserRouter([{
       path: '/settings'
     },
     {
-      element: <Notifications />,
-      path: "/notifications"
+      element: <Messages />,
+      path: "/messages"
     },
     {
       element: <Profile />,

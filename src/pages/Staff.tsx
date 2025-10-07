@@ -5,11 +5,12 @@ import SVG10 from "../../public/assets/SVG10.svg?react"
 import StaffStatCard from "../components/panelComponents/staff/StaffStatCard"
 import { useNavigate } from "react-router-dom"
 import StaffCard from "../components/panelComponents/staff/StaffCard"
+import index from "../utils"
 export default function Staff() {
 
   const navigate = useNavigate()
-
-  const TAD = JSON.parse(localStorage.getItem("users") || "[]").filter((user: any) => user.role === "Teacher" || user.role === "Administrator")
+  const {getAllUser, getRole} = index()
+  const TAD = getAllUser().filter((user: any) => user.role === "Teacher" || user.role === "Administrator")
 
   return (
     <div className="w-full flex justify-center">
@@ -43,8 +44,7 @@ export default function Staff() {
         <div className="flex gap-[24px] flex-col">
           {
             TAD.map((TOD: any, index: number) => {
-              const roleEng = TOD.role
-              const roleGeorgian = roleEng === "Parent" ? "მშობელი" : roleEng === "Administrator" ? "ადმინისტრატორი" : roleEng === "Teacher" ? "მასწავლებელი" : "სტუმარი"
+              const roleGeorgian = getRole(TOD.role)!
               return <StaffCard key={index} firstname={TOD.firstname} lastname={TOD.lastname} experience={TOD.experience} email={TOD.email} phone={TOD.phoneNumber} startDate={TOD.startDate} subjects={TOD.subjects} role={roleGeorgian} />
             })
           }

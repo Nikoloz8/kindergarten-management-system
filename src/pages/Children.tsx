@@ -1,9 +1,11 @@
 import { useState } from "react"
 import ChildCard from "../components/panelComponents/all child/ChildCard"
+import index from "../utils"
 export default function Children() {
 
   const [mode, setMode] = useState(false)
-  const parents = JSON.parse(localStorage.getItem("users")!).filter((e: any) => e.role === "Parent")
+  const { getAllUser } = index()
+  const parents = getAllUser().filter((e: any) => e.role === "Parent")
 
   return (
     <div className="flex justify-center w-full mt-[24px]">

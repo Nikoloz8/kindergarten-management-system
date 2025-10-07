@@ -8,7 +8,7 @@ import index from "../utils"
 export default function Profile() {
 
 
-    const { getRole, getCurrentUser } = index()
+    const { getRole, getCurrentUser, getAllUser } = index()
     const currentUser = getCurrentUser()
     const role = getRole()
     const { register, watch } = useForm()
@@ -37,7 +37,7 @@ export default function Profile() {
                 phoneNumber: values.phone
             }
             localStorage.setItem("currentUser", JSON.stringify(updatedUser))
-            const users = JSON.parse(localStorage.getItem("users") || "[]")
+            const users = getAllUser()
             const updatedUsers = users.map((user: any) => user.id === currentUser.id ? updatedUser : user)
             localStorage.setItem("users", JSON.stringify(updatedUsers))
             setTriggerChange(false)
@@ -45,7 +45,7 @@ export default function Profile() {
     }
 
     const [image, setImage] = useState<string | null>(currentUser.profilePhoto || null)
-    
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0]
@@ -59,7 +59,7 @@ export default function Profile() {
                     profilePhoto: base64
                 }
                 localStorage.setItem("currentUser", JSON.stringify(updatedUser))
-                const users = JSON.parse(localStorage.getItem("users") || "[]")
+                const users = getAllUser()
                 const updatedUsers = users.map((user: any) =>
                     user.id === currentUser.id ? updatedUser : user
                 )

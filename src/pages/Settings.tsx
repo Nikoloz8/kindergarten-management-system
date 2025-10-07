@@ -7,7 +7,7 @@ import index from "../utils"
 
 export default function Settings() {
 
-  const { getRole, getCurrentUser } = index()
+  const { getRole, getCurrentUser, getAllUser } = index()
   const currentUser = getCurrentUser()
   const role = getRole()
   const [visibleProfile, setVisibleProfile] = useState(currentUser?.visibleProfile)
@@ -17,7 +17,7 @@ export default function Settings() {
   const handleChangeVisibility = () => {
     const updatedUser = { ...currentUser, visibleProfile: !visibleProfile }
     localStorage.setItem("currentUser", JSON.stringify(updatedUser))
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
+    const users = getAllUser()
     const updatedUsers = users.map((user: any) => user.email === currentUser.email ? updatedUser : user)
     localStorage.setItem("users", JSON.stringify(updatedUsers))
   }

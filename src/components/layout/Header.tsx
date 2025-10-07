@@ -31,7 +31,7 @@ export default function Header() {
         "/activities": "აქტივობები",
         "/calendar": "კალენდარი",
         "/settings": "პარამეტრები",
-        "/notifications": "შეტყობინებები"
+        "/messages": "შეტყობინებები"
     }
 
     const getSelectedPanelFromParams = () => {
@@ -73,7 +73,7 @@ export default function Header() {
         {
             title: "შეტყობინებები",
             icon: <SVG8 />,
-            path: "/notifications"
+            path: "/message"
         }
     ]
 
@@ -101,7 +101,7 @@ export default function Header() {
         {
             title: "შეტყობინებები",
             icon: <SVG8 />,
-            path: "/notifications"
+            path: "/messages"
         },
         {
             title: "პარამეტრები",
@@ -139,7 +139,7 @@ export default function Header() {
         {
             title: "შეტყობინებები",
             icon: <SVG8 />,
-            path: "/notifications"
+            path: "/messages"
         },
         {
             title: "პარამეტრები",

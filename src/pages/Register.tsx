@@ -13,16 +13,14 @@ export default function Register() {
     const navigate = useNavigate()
     const { inputStyle, labelStyle } = styles()
 
-    const { getRole } = index()
+    const { getRole, getAllUser } = index()
 
     const role = getRole()
 
     if (!role) return
 
     const handleRegister = () => {
-        const users = localStorage.getItem("users")
-        if (!users) return
-        const newUsers = JSON.parse(users)
+        const newUsers = getAllUser()
         newUsers.push(
             {
                 role: "Parent",
