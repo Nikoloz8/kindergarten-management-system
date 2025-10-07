@@ -42,6 +42,13 @@ export default function StaffCard({ firstname, lastname, experience, email, phon
                         სპეციალიზაცია:
                     </h5>
                     <div className="flex flex-wrap gap-[8px]">
+                        {subjects.length === 0 && role === "ადმინისტრატორი" ?
+                            <>
+                                <span className="p-[2px_10px] border-[1px] border-solid  rounded-[999px] font-[600] text-[1.2rem]">მართვა</span>
+                                <span className="p-[2px_10px] border-[1px] border-solid  rounded-[999px] font-[600] text-[1.2rem]">ორგანიზება</span>
+                            </> :
+                            <span className="p-[2px_10px] border-[1px] border-solid  rounded-[999px] font-[600] text-[1.2rem]">არ არის მითითებული</span>
+                        }
                         {subjects.map((subject, index) => {
                             return <span key={index} className="p-[2px_10px] border-[1px] border-solid  rounded-[999px] font-[600] text-[1.2rem]">{subject}</span>
                         })

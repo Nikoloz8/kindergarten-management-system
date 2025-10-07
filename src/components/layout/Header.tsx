@@ -156,8 +156,8 @@ export default function Header() {
         localStorage.setItem("currentUser", JSON.stringify({
             role: "Guest"
         }))
-        window.location.reload()
         navigate("/")
+        window.location.reload()
     }
 
     return (
