@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import SVG29 from "../../public/assets/SVG29.svg?react"
 import MessageCard from "../components/panelComponents/messages/MessageCard"
 import index from "../utils"
+import { useForm } from "react-hook-form"
 export default function Messages() {
 
   const { getCurrentUser, getAllUser } = index()
@@ -10,20 +11,23 @@ export default function Messages() {
   const chats = JSON.parse(localStorage.getItem("chats") || "{}")
   const [chatsFromStorage, setChatsFromStorage] = useState(chats || {})
 
-  function sendMessage(senderId: number, text: string) {
-    const chatId = senderId < currentUser.id ? `${senderId}_${currentUser.id}` : `${currentUser.id}_${senderId}`
+  const { register, watch, reset } = useForm()
+  function sendMessage(text: string) {
+    if (!selectedChat) return
+    const receiverId = selectedChat
+    const senderId = currentUser.id
+
+    const chatId = senderId < receiverId
+      ? `${senderId}_${receiverId}`
+      : `${receiverId}_${senderId}`
 
     const chats = JSON.parse(localStorage.getItem("chats") || "{}")
-    const [user1Id, user2Id] = chatId.split("_").map(Number)
-
-    const senderUser = users.find((u: any) => u.id === senderId)
-    const receiverUser = users.find((u: any) => u.id === (senderId === user1Id ? user2Id : user1Id))
 
     if (!chats[chatId]) {
       chats[chatId] = {
-        participants: { user1: senderUser, user2: receiverUser },
+        participants: { user1: senderId, user2: receiverId },
         messages: []
-      }
+      };
     }
 
     const newMessage = {
@@ -32,42 +36,45 @@ export default function Messages() {
       text,
       timestamp: new Date().toISOString(),
       read: false
-    }
+    };
 
     chats[chatId].messages.push(newMessage)
     chats[chatId].lastMessage = newMessage
     setChatsFromStorage(chats)
     localStorage.setItem("chats", JSON.stringify(chats))
+    reset({message: ""})
   }
+
 
 
   const [selectedChat, setSelectedChat] = useState<string>(() => currentUser.lastChat || "")
   const setChatId = (user: any) => {
     const currentUser = getCurrentUser()
     const chats = JSON.parse(localStorage.getItem("chats") || "{}")
-    const chatId = currentUser.id < user.id ? `${currentUser.id}_${user.id}` : `${user.id}_${currentUser.id}`
-    if (!currentUser.lastChat) {
-      localStorage.setItem("currentUser", JSON.stringify({ ...currentUser, lastChat: user.id }))
-      const users = getAllUser()
-      users.forEach((u: any) => {
-        if (u.id === currentUser.id) {
-          u.lastChat = user.id
-        } else {
-          u.lastChat = u.lastChat || ""
-        }
-      })
-      if (!chats[chatId]) {
-        chats[chatId] = {
-          participants: { user1: currentUser.id, user2: user.id },
-          messages: []
-        }
-        localStorage.setItem("chats", JSON.stringify(chats))
+    const chatId = currentUser.id < user.id
+      ? `${currentUser.id}_${user.id}`
+      : `${user.id}_${currentUser.id}`
+
+    const updatedCurrentUser = { ...currentUser, lastChat: user.id }
+    localStorage.setItem("currentUser", JSON.stringify(updatedCurrentUser))
+
+    const users = getAllUser()
+    users.forEach((u: any) => {
+      if (u.id === currentUser.id) {
+        u.lastChat = user.id
       }
-      localStorage.setItem("users", JSON.stringify(users))
+    })
+    localStorage.setItem("users", JSON.stringify(users))
+    if (!chats[chatId]) {
+      chats[chatId] = {
+        participants: { user1: currentUser.id, user2: user.id },
+        messages: []
+      }
+      localStorage.setItem("chats", JSON.stringify(chats))
     }
+
     setSelectedChat(user.id)
   }
-
   const selectedChatUser = users.find((u: any) => u.id === selectedChat)
   const chatId = currentUser.id < selectedChat
     ? `${currentUser.id}_${selectedChat}`
@@ -75,7 +82,6 @@ export default function Messages() {
 
   const messages = chatsFromStorage[chatId]?.messages || []
 
-  console.log(selectedChatUser)
 
   return (
     <div>
@@ -108,8 +114,8 @@ export default function Messages() {
                 <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
                 <h3 className="text-[1.4rem] text-[#020817] font-[600]">{selectedChatUser.firstname} {selectedChatUser.lastname}</h3>
               </div>
-              <div className="flex flex-col gap-[16px] h-full p-[50px_16px]">
-                <div className="w-full flex flex-col">
+              <div className="flex flex-col gap-[16px] h-full p-[50px_16px] overflow-y-auto">
+                <div className="w-full flex flex-col gap-[16px] h-full">
                   {selectedChatUser &&
                     messages.map((msg: any, index: number) => {
                       console.log(msg.senderId, currentUser.id)
@@ -134,15 +140,15 @@ export default function Messages() {
                 </div>
               </div>
               <div className="border-t-[1px] border-solid w-full p-[16px] bg-[#f1f5f933] flex gap-[8px] items-center">
-                <input type="text" className="w-full outline-none bg-white border-[1px] border-solid rounded-[8px] p-[8px_12px] text-[1.4rem]" placeholder="შეტყობინების დაწერა..." />
+                <input {...register("message")} type="text" className="w-full outline-none bg-white border-[1px] border-solid rounded-[8px] p-[8px_12px] text-[1.4rem]" placeholder="შეტყობინების დაწერა..." />
                 <button onClick={() => {
-                  sendMessage(Number(currentUser.id), "test")
+                  sendMessage(watch("message"))
                 }} className="cursor-pointer p-[8px_12px] rounded-[8px] flex items-center justify-center text-black border-[1px] border-solid text-[1.2rem] gap-[8px]">
                   გაგზავნა
                   <img src="/assets/SVG42.svg" className="w-[16px]" alt="" />
                 </button>
               </div>
-            </div> : <div className="border-[1px] border-solid w-full flex flex-col items-center justify-center text-[#64748b] text-[1.4rem]">აირჩიეთ ჩეთი მარცხნივ</div>
+            </div> : <div className="border-[1px] border-solid w-full flex flex-col items-center justify-center text-[#64748b] text-[1.4rem]">აირჩიეთ ჩათი მარცხნივ</div>
             }
           </div>
         </div>
