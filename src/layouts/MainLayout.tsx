@@ -13,6 +13,10 @@ export default function MainLayout() {
             }))
         }
 
+        if (localStorage.getItem("chats") === null) {
+            localStorage.setItem("chats", JSON.stringify({}))
+        }
+
         if (!localStorage.getItem("users")) {
             localStorage.setItem("users", JSON.stringify([
                 {

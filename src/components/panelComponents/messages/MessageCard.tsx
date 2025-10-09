@@ -1,14 +1,12 @@
 import index from "../../../utils"
 
-export default function MessageCard({ userId }: { userId?: number }) {
-
-    const { getRole, getAllUser } = index()
-    const users = getAllUser()
-    const user = users.find((e: any) => e.id === userId)
-
+export default function MessageCard({ user, onClick, chat }: { user: any, onClick?: (user: any) => void, chat: any }) {
+    const userId = user.id
+    const { getRole } = index()
+    if (!userId) return
 
     return (
-        <div className="flex justify-between p-[12px] min-w-[350px] bg-[#f6f9fb]">
+        <div onClick={() => onClick!(user)} className={`cursor-pointer flex justify-between p-[12px] min-w-[350px] ${chat === userId ? "bg-[#f6f9fb]" : "bg-transparent"} `}>
             <div className="flex gap-[12px] items-center justify-center">
                 <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
                 <div className="flex flex-col gap-[4px]">
