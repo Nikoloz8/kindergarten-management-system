@@ -12,7 +12,7 @@ export default function Login() {
 
     const { inputStyle, labelStyle } = styles()
     const navigate = useNavigate()
-
+    
     const handleLogin = () => {
         const users = localStorage.getItem("users")
         if (!users) return
@@ -20,6 +20,7 @@ export default function Login() {
         if (!currentUser) {
             return
         }
+
         localStorage.setItem("currentUser", JSON.stringify(currentUser))
         navigate("/")
     }

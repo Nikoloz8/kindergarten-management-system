@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import SVG29 from "../../public/assets/SVG29.svg?react"
 import MessageCard from "../components/panelComponents/messages/MessageCard"
 import index from "../utils"
@@ -42,7 +42,7 @@ export default function Messages() {
     chats[chatId].lastMessage = newMessage
     setChatsFromStorage(chats)
     localStorage.setItem("chats", JSON.stringify(chats))
-    reset({message: ""})
+    reset({ message: "" })
   }
 
 
@@ -83,6 +83,14 @@ export default function Messages() {
   const messages = chatsFromStorage[chatId]?.messages || []
 
 
+  const lastMessageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    lastMessageRef.current?.scrollTo({
+      top: lastMessageRef.current.scrollHeight
+    });
+  }, [messages])
+
   return (
     <div>
       <div className="flex justify-center w-full mt-[24px]">
@@ -114,21 +122,20 @@ export default function Messages() {
                 <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
                 <h3 className="text-[1.4rem] text-[#020817] font-[600]">{selectedChatUser.firstname} {selectedChatUser.lastname}</h3>
               </div>
-              <div className="flex flex-col gap-[16px] h-full p-[50px_16px] overflow-y-auto">
+              <div ref={lastMessageRef} className="flex flex-col gap-[16px] h-full p-[50px_16px] overflow-y-auto">
                 <div className="w-full flex flex-col gap-[16px] h-full">
                   {selectedChatUser &&
                     messages.map((msg: any, index: number) => {
-                      console.log(msg.senderId, currentUser.id)
                       if (msg.senderId === currentUser.id) {
                         return <div key={index} className="flex w-full justify-end">
-                          <div className="bg-[#0f172a] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_0_16px] flex flex-col gap-[6px] text-[#f8fafc]">
+                          <div className={`bg-[#0f172a] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_0_16px] flex flex-col gap-[6px] text-[#f8fafc] ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
                             {msg.text}
                             <span className="text-[1rem] text-[#f8fafc]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                           </div>
                         </div>
                       } else {
                         return <div key={index} className="flex w-full justify-start">
-                          <div className="bg-[#eaeaea] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_16px] flex flex-col gap-[6px] text-[#020817]">
+                          <div className={`bg-[#eaeaea] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_16px] flex flex-col gap-[6px] text-[#020817] ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
                             {msg.text}
                             <span className="text-[1rem] text-[#64748b]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                           </div>
@@ -139,7 +146,7 @@ export default function Messages() {
                   }
                 </div>
               </div>
-              <div className="border-t-[1px] border-solid w-full p-[16px] bg-[#f1f5f933] flex gap-[8px] items-center">
+              <form action="" className="border-t-[1px] border-solid w-full p-[16px] bg-[#f1f5f933] flex gap-[8px] items-center" onSubmit={(e) => { e.preventDefault() }}>
                 <input {...register("message")} type="text" className="w-full outline-none bg-white border-[1px] border-solid rounded-[8px] p-[8px_12px] text-[1.4rem]" placeholder="შეტყობინების დაწერა..." />
                 <button onClick={() => {
                   sendMessage(watch("message"))
@@ -147,7 +154,7 @@ export default function Messages() {
                   გაგზავნა
                   <img src="/assets/SVG42.svg" className="w-[16px]" alt="" />
                 </button>
-              </div>
+              </form>
             </div> : <div className="border-[1px] border-solid w-full flex flex-col items-center justify-center text-[#64748b] text-[1.4rem]">აირჩიეთ ჩათი მარცხნივ</div>
             }
           </div>
