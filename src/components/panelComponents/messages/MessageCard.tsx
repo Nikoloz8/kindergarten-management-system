@@ -20,10 +20,7 @@ export default function MessageCard({ user, onClick, chat }: { user: any, onClic
                 <div className="flex flex-col gap-[4px]">
                     <h3 className="text-[1.4rem] text-[#020817] font-[600]">{user.firstname} {user.lastname}</h3>
                     <h4 className="text-[1.2rem] text-[#64748b]">{`${getRole(user.role)} ${user.role === "Parent" ? `(${user.childFullName})` : ""}`}</h4>
-                    <p className="text-[#64748b] text-[1.4rem]">{lastMessage ?
-                        (`${lastMessage.senderId === currentUser.id ? "Sent: " : "New: "} 
-    ${lastMessage.text.length > 20 ? lastMessage.text.slice(0, 20) + "..." : lastMessage.text}`)
-                        : ""}</p>
+                    <p className="text-[#64748b] text-[1.4rem] truncate text-nowrap max-w-[350px]">{lastMessage && lastMessage.text}</p>
                 </div>
             </div>
             <h5 className="text-[#64748b] text-[1.2rem]">{lastMessage ? new Date(lastMessage.timestamp).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : ""}</h5>

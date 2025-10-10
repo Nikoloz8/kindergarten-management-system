@@ -91,6 +91,20 @@ export default function Messages() {
     });
   }, [messages])
 
+  const [search, setSearch] = useState(watch().searchInput)
+
+  useEffect(() => {
+    setSearch(watch().searchInput)
+  }, [watch().searchInput])
+
+  const neededUsers = search
+    ? users.filter((e: any) =>
+      e.firstname.toLowerCase().includes(search.toLowerCase()) ||
+      e.lastname.toLowerCase().includes(search.toLowerCase())
+    )
+    : users
+
+
   return (
     <div>
       <div className="flex justify-center w-full mt-[24px]">
@@ -101,15 +115,17 @@ export default function Messages() {
           </div>
           <div className="flex gap-[24px] w-full h-[800px]">
             <div className="border-[1px] border-solid p-[24px_0]">
-              <div className="p-[0_24px] flex jusctify-center">
+              <form className="w-full p-[0_24px] pb-[12px] flex jusctify-center" action="" onSubmit={(e) => {
+                e.preventDefault()
+              }}>
                 <label htmlFor="search" className="p-[8px_12px] rounded-[8px] border-[1px] border-solid  flex gap-[12px] items-center w-full">
                   <SVG29 className="stroke-[#64748b] h-[16px] w-[16px]" />
-                  <input type="text" className="outline-none text-[1.4rem] " placeholder="ძებნა..." id="search" />
+                  <input {...register("searchInput")} type="text" className="outline-none text-[1.4rem] " placeholder="ძებნა..." id="search" />
                 </label>
-              </div>
+              </form>
               <div className="flex flex-col gap-[4px] mt-[8px]">
                 {
-                  users.map((user: any, index: number) => {
+                  neededUsers.map((user: any, index: number) => {
                     if (user.id !== currentUser.id) {
                       return <MessageCard onClick={() => setChatId(user)} key={index} chat={selectedChat} user={user} />
                     }
@@ -117,7 +133,7 @@ export default function Messages() {
                 }
               </div>
             </div>
-            {selectedChatUser ? <div className="border-[1px] border-solid w-full flex flex-col">
+            {selectedChatUser ? <div className="border-[1px] max-w-[900px] border-solid w-full flex flex-col">
               <div className="p-[12px_24px] w-full flex gap-[12px] items-center border-b-[1px] border-solid">
                 <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
                 <h3 className="text-[1.4rem] text-[#020817] font-[600]">{selectedChatUser.firstname} {selectedChatUser.lastname}</h3>
@@ -128,14 +144,14 @@ export default function Messages() {
                     messages.map((msg: any, index: number) => {
                       if (msg.senderId === currentUser.id) {
                         return <div key={index} className="flex w-full justify-end">
-                          <div className={`bg-[#0f172a] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_0_16px] flex flex-col gap-[6px] text-[#f8fafc] ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
+                          <div className={`bg-[#0f172a] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_0_16px] flex flex-col gap-[6px] break-words text-[#f8fafc] ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
                             {msg.text}
                             <span className="text-[1rem] text-[#f8fafc]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                           </div>
                         </div>
                       } else {
                         return <div key={index} className="flex w-full justify-start">
-                          <div className={`bg-[#eaeaea] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_16px] flex flex-col gap-[6px] text-[#020817] ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
+                          <div className={`bg-[#eaeaea] text-[1.4rem] max-w-[40%] p-[10px_16px] rounded-[16px_16px_16px] flex flex-col gap-[6px] text-[#020817] break-words ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
                             {msg.text}
                             <span className="text-[1rem] text-[#64748b]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                           </div>
