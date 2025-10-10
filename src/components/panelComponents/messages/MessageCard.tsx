@@ -56,7 +56,10 @@ export default function MessageCard({ user, onClick, chat }: { user: any, onClic
             markReadedMessages()
         }} className={`cursor-pointer flex justify-between p-[12px] min-w-[350px] ${chat === userId ? "bg-[#f6f9fb]" : "bg-transparent"} `}>
             <div className="flex gap-[12px] items-center justify-center">
-                <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
+                {
+                    user.profilePhoto ? <img src={user.profilePhoto} className="w-[48px] h-[48px] rounded-full" alt="" /> :
+                        <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
+                }
                 <div className="flex flex-col gap-[4px]">
                     <h3 className="text-[1.4rem] text-[#020817] font-[600]">{user.firstname} {user.lastname}</h3>
                     <h4 className="text-[1.2rem] text-[#64748b]">{`${getRole(user.role)} ${user.role === "Parent" ? `(${user.childFullName})` : ""}`}</h4>

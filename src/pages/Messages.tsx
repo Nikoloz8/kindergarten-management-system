@@ -137,8 +137,10 @@ export default function Messages() {
             </div>
             {selectedChatUser ? <div className="border-[1px] max-w-[900px] border-solid w-full flex flex-col">
               <div className="p-[12px_24px] w-full flex gap-[12px] items-center border-b-[1px] border-solid">
-                <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
-                <h3 className="text-[1.4rem] text-[#020817] font-[600]">{selectedChatUser.firstname} {selectedChatUser.lastname}</h3>
+                {
+                  selectedChatUser.profilePhoto ? <img src={selectedChatUser.profilePhoto} className="w-[48px] h-[48px] rounded-full" alt="" /> :
+                    <span className="w-[48px] h-[48px] rounded-full bg-[#eaeaea]"></span>
+                }                <h3 className="text-[1.4rem] text-[#020817] font-[600]">{selectedChatUser.firstname} {selectedChatUser.lastname}</h3>
               </div>
               <div ref={lastMessageRef} className="flex flex-col gap-[16px] h-full p-[50px_16px] overflow-y-auto">
                 <div className="w-full flex flex-col gap-[16px] h-full">
@@ -150,7 +152,7 @@ export default function Messages() {
                             {msg.text}
                             <div className="flex items-center gap-[4px] w-full justify-end">
                               <span className="text-[1rem] text-[#f8fafc]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                              <SVG43 className={`w-[14px] ${!msg.read? "stroke-[#777d88]" : "stroke-[#85b3e8]"}`}/>
+                              <SVG43 className={`w-[14px] ${!msg.read ? "stroke-[#777d88]" : "stroke-[#85b3e8]"}`} />
                             </div>
                           </div>
                         </div>
