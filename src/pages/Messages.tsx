@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import SVG29 from "../../public/assets/SVG29.svg?react"
+import SVG43 from "../../public/assets/SVG43.svg?react"
 import MessageCard from "../components/panelComponents/messages/MessageCard"
 import index from "../utils"
 import { useForm } from "react-hook-form"
@@ -105,6 +106,7 @@ export default function Messages() {
     : users
 
 
+
   return (
     <div>
       <div className="flex justify-center w-full mt-[24px]">
@@ -146,7 +148,10 @@ export default function Messages() {
                         return <div key={index} className="flex w-full justify-end">
                           <div className={`bg-[#0f172a] text-[1.4rem] max-w-[60%] p-[10px_16px] rounded-[16px_16px_0_16px] flex flex-col gap-[6px] break-words text-[#f8fafc] ${index === messages.length - 1 ? "mb-[16px]" : ""}`}>
                             {msg.text}
-                            <span className="text-[1rem] text-[#f8fafc]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                            <div className="flex items-center gap-[4px] w-full justify-end">
+                              <span className="text-[1rem] text-[#f8fafc]">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                              <SVG43 className={`w-[14px] ${!msg.read? "stroke-[#777d88]" : "stroke-[#85b3e8]"}`}/>
+                            </div>
                           </div>
                         </div>
                       } else {
