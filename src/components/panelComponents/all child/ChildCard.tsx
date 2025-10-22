@@ -5,7 +5,7 @@ export default function ChildCard({ childName, childAge, ParentName }: { childNa
         <div className="flex flex-col w-[420px] gap-[12px] p-[24px] border-[1px] border-solid ">
             <div className="flex w-full justify-between items-center">
                 <div className="flex gap-[12px] items-center">
-                    <span className="w-[48px] h-[48px] rounded-full bg-[#f1f5f9] flex items-center justify-center text-[1.6rem] text-[#020817]">{ParentName.split(" ")[0][0]}{ParentName.split(" ")[1][0]}</span>
+                    <span className="w-[48px] h-[48px] rounded-full bg-[#f1f5f9] flex items-center justify-center text-[1.6rem] text-[#020817]">{childName.split(" ")[0][0]}{childName.split(" ")[1][0]}</span>
                     <div className="flex flex-col">
                         <h4 className="font-[600] text-[1.8rem] leading-[28px]">{childName}</h4>
                         <h5 className="text-[#64748b] text-[1.4rem] leading-[20px]">ასაკი: {childAge}</h5>

@@ -20,7 +20,6 @@ export default function Children() {
         </div>
         <div className="flex gap-[24px]">
           {parents.map((e: any, i: number) => {
-            console.log(e.childFullName)
             return <ChildCard key={i} childAge={e.childAge} childName={e.childFullName} ParentName={`${e.firstname} ${e.lastname}`} />
           })}
         </div>

@@ -37,7 +37,6 @@ export default function MainLayout() {
 
     const { register, watch, reset } = useForm()
 
-
     return (
         <div className="flex items-center justify-center flex-col">
             <div className="w-[1290px]">
