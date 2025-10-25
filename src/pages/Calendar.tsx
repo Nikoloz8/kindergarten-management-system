@@ -6,13 +6,19 @@ import { useState } from 'react'
 import SVG4 from "../../public/assets/SVG4.svg?react"
 import SVG44 from "../../public/assets/SVG44.svg?react"
 import SVG10 from "../../public/assets/SVG10.svg?react"
+import SVG46 from "../../public/assets/SVG46.svg?react"
+import SVG47 from "../../public/assets/SVG47.svg?react"
 import SVG45 from "../../public/assets/SVG45.svg?react"
-
+import { useForm } from 'react-hook-form'
+import { useOutletContext } from 'react-router-dom'
+import DatePicker, { registerLocale } from "react-datepicker"
+import { ka } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css"
 
 export default function CalendarPage() {
   const localizer = dayjsLocalizer(dayjs)
   dayjs.locale("ka")
-
+  registerLocale("ka", ka);
   // const events = [
   //   {
   //     title: 'Test Event',
@@ -52,8 +58,91 @@ export default function CalendarPage() {
     }
   ]
 
+  const { register, watch } = useForm()
+  const { addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeOfEvent, setTimeChangeOfEvent } = useOutletContext<TLayoutContext>()
+
+  console.log(watch())
+
+  const [showTypesMenu, setShowTypesMenu] = useState(false)
+  const [selectedType, setSelectedType] = useState("ღონისძიება")
+  const eventTypesSingular = ["შეხვედრა", "ღონისძიება", "გაკვეთილი", "ჯანმრთელობა"]
+
   return (
-    <div className="flex justify-center w-full mt-[24px]">
+    <div className="flex justify-center w-full mt-[24px] relative">
+      <div className={`top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute p-[24px] flex-col gap-[16px] hidden ${addEventForm && "flex!"} bg-white z-20`}>
+        <div className='flex w-full justify-between items-center'>
+          <h4 className='font-[600] text-[1.8rem]'>
+            ახალი ღონისძიება
+          </h4>
+          <button onClick={() => setAddEventForm(false)}>
+            <SVG47 className='w-[14px] cursor-pointer stroke-[gray] hover:stroke-black transition-all duration-200' />
+          </button>
+        </div>
+        <form onSubmit={(e) => e.preventDefault()} className='flex flex-col gap-[16px]'>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="title" className='font-[500] text-[1.4rem] w-fit'>დასახელება</label>
+              <input type="text" id='title' {...register("title")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='ღონისძიების დასახელება' />
+            </div>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="type" className='font-[500] text-[1.4rem] w-fit'>ტიპი</label>
+              <div id='type' onClick={() => setShowTypesMenu(!showTypesMenu)} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px] flex cursor-pointer justify-between items-center relative'>
+                {selectedType}
+                <SVG46 className='w-[12px]' />
+                {showTypesMenu &&
+                  <div className='absolute bg-white flex flex-col p-[4px] rounded-[8px] border-[1px] shadow-lg w-full left-0 top-[45px]'>
+                    {eventTypesSingular.map((e, i) => {
+                      return <button onClick={() => setSelectedType(e)} key={i} className='w-full text-[1.4rem] text-start p-[8px_16px] hover:bg-[#f1f5f9]'>
+                        {e}
+                      </button>
+                    })}
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="date" className='font-[500] text-[1.4rem] w-fit'>თარიღი</label>
+              <DatePicker
+                id="date"
+                selected={date}
+                onChange={(d) => setDate(d!)}
+                locale="ka"
+                className='border-[1px] p-[8px] text-[1.4rem] w-[300px] hover:bg-[#f1f5f9] transition-all duration-300 cursor-pointer placeholder:duration-300  outline-none hover:placeholder:text-black'
+                dateFormat="dd/MM/yyyy"
+                placeholderText="თარიღის არჩევა"
+              />
+            </div>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="time" className='font-[500] text-[1.4rem] w-fit'>დრო</label>
+              <input type="time" lang='ka' id='time' {...register("time")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+            </div>
+          </div>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="duration" className='font-[500] text-[1.4rem] w-fit'>ხანგძლივობა</label>
+              <input type="text" lang='ka' id='duration' {...register("duration")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='მაგ: 2 საათი' />
+            </div>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="participantsNumber" className='font-[500] text-[1.4rem] w-fit'>მონაწილეთა რაოდენობა</label>
+              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+            </div>
+          </div>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="place" className='font-[500] text-[1.4rem] w-fit'>ადგილი</label>
+            <input type="text" lang='ka' id='place' {...register("place")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='ღონისძიების ადგილი' />
+          </div>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="description" className='font-[500] text-[1.4rem] w-fit'>აღწერა</label>
+            <textarea id='description' {...register("description")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='დამატებითი ინფორმაცია... ' />
+          </div>
+          <div className='flex w-full justify-end items-center gap-[8px]'>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შექმნა</button>
+          </div>
+        </form>
+      </div>
       <div className="flex flex-col gap-[24px] w-[1290px] items-start">
         <div className="flex flex-col w-full items-start">
           <h1 className="text-[#020817] text-[3rem] font-[700]">კალენდარი</h1>
@@ -103,15 +192,15 @@ export default function CalendarPage() {
                 სწრაფი მოქმედებები
               </h5>
               <div className='flex flex-col gap-[8px]'>
-                <button className='flex items-center gap-[16px] rounded-[8px] bg-[#f1f5f9] w-full p-[2px_12px] font-[500] text-[1.2rem] text-[#0f172a] cursor-pointer'>
+                <button onClick={() => setAddEventForm(true)} className='flex items-center gap-[16px] rounded-[8px] bg-[#f1f5f9] w-full p-[2px_12px] font-[500] text-[1.2rem] text-[#0f172a] cursor-pointer'>
                   <SVG44 className='w-[16px]' />
                   ღონისძიების დამატება
                 </button>
-                <button className='flex items-center gap-[16px] rounded-[8px] bg-[#f1f5f9] w-full p-[2px_12px] font-[500] text-[1.2rem] text-[#0f172a] cursor-pointer h-[28px]'>
+                <button onClick={() => setMarkParentsMeeting(true)} className='flex items-center gap-[16px] rounded-[8px] bg-[#f1f5f9] w-full p-[2px_12px] font-[500] text-[1.2rem] text-[#0f172a] cursor-pointer h-[28px]'>
                   <SVG10 stroke='currentColor' />
                   მშობელთა შეხვედრა
                 </button>
-                <button className='flex items-center gap-[16px] rounded-[8px] bg-[#f1f5f9] w-full p-[2px_12px] font-[500] text-[1.2rem] text-[#0f172a] cursor-pointer'>
+                <button onClick={() => setTimeChangeOfEvent(true)} className='flex items-center gap-[16px] rounded-[8px] bg-[#f1f5f9] w-full p-[2px_12px] font-[500] text-[1.2rem] text-[#0f172a] cursor-pointer'>
                   <SVG45 className='w-[16px]' />
                   დროის ცვლილება
                 </button>

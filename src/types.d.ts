@@ -2,6 +2,12 @@ type TLayoutContext = {
     register: UseFormRegister<FieldValues>
     reset: UseFormReset<FieldValues>
     watch: UseFormWatch<FieldValues>
+    addEventForm: boolean
+    setAddEventForm: React.Dispatch<React.SetStateAction<boolean>>
+    markParentsMeeting: boolean
+    setMarkParentsMeeting: React.Dispatch<React.SetStateAction<boolean>>
+    changeTimeOfEvent: boolean
+    setTimeChangeOfEvent: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type TUser = {

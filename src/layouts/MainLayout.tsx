@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function MainLayout() {
 
@@ -37,12 +37,23 @@ export default function MainLayout() {
 
     const { register, watch, reset } = useForm()
 
+    const [addEventForm, setAddEventForm] = useState(false)
+    const [markParentsMeeting, setMarkParentsMeeting] = useState(false)
+    const [changeTimeChangeOfEvent, setTimeChangeOfEvent] = useState(false)
+
     return (
-        <div className="flex items-center justify-center flex-col">
+        <div className="flex items-center justify-center flex-col relative">
+            {addEventForm || markParentsMeeting || changeTimeChangeOfEvent ?
+                <div className='absolute w-full h-full bg-[rgba(0,0,0,0.5)] z-[10]' onClick={() => {
+                    setAddEventForm(false)
+                    setMarkParentsMeeting(false)
+                    setTimeChangeOfEvent(false)
+                }}></div> : <></>
+            }
             <div className="w-[1290px]">
                 <Header />
             </div>
-            <Outlet context={{ register, reset, watch }} />
+            <Outlet context={{ register, reset, watch, addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeChangeOfEvent, setTimeChangeOfEvent }} />
             <Footer />
         </div>
     )
