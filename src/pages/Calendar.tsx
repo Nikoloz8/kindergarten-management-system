@@ -61,7 +61,7 @@ export default function CalendarPage() {
   const { register, watch } = useForm()
   const { addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeOfEvent, setTimeChangeOfEvent } = useOutletContext<TLayoutContext>()
 
-  console.log(watch())
+  console.log(changeTimeOfEvent)
 
   const [showTypesMenu, setShowTypesMenu] = useState(false)
   const [selectedType, setSelectedType] = useState("ღონისძიება")
@@ -199,7 +199,55 @@ export default function CalendarPage() {
           </div>
           <div className='flex w-full justify-end items-center gap-[8px]'>
             <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
-            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შექმნა</button>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>დაგეგმვა</button>
+          </div>
+        </form>
+      </div>
+      <div className={`top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute p-[24px] flex-col gap-[16px] hidden ${changeTimeOfEvent && "flex!"} bg-white z-20`}>
+        <div className='flex w-full justify-between items-center'>
+          <h4 className='font-[600] text-[1.8rem]'>
+            დროის ცვლილება
+          </h4>
+          <button onClick={() => setTimeChangeOfEvent(false)}>
+            <SVG47 className='w-[14px] cursor-pointer stroke-[gray] hover:stroke-black transition-all duration-200' />
+          </button>
+        </div>
+        <form onSubmit={(e) => e.preventDefault()} className='flex flex-col gap-[16px]'>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="topic" className='font-[500] text-[1.4rem] w-fit'>კლასი</label>
+            <input type="text" id='topic' {...register("topic")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='მაგ: კლასი #1' />
+          </div>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="firstTime" className='font-[500] text-[1.4rem] w-fit'>თავდაპირველი დრო</label>
+              <input type="time" lang='ka' id='fistTime' {...register("firstTime")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+            </div>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="newTime" className='font-[500] text-[1.4rem] w-fit'>ახალი დრო</label>
+              <input type="time" lang='ka' id='newTime' {...register("newTime")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+            </div>
+          </div>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px] w-full'>
+              <label htmlFor="date" className='font-[500] text-[1.4rem]'>თარიღი</label>
+              <DatePicker
+                id="date"
+                selected={date}
+                onChange={(d) => setDate(d!)}
+                locale="ka"
+                className='border-[1px] p-[8px] text-[1.4rem] w-full hover:bg-[#f1f5f9] transition-all duration-300 cursor-pointer placeholder:duration-300  outline-none hover:placeholder:text-black'
+                dateFormat="dd/MM/yyyy"
+                placeholderText="თარიღის არჩევა"
+              />
+            </div>
+          </div>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="reason" className='font-[500] text-[1.4rem] w-fit'>მიზეზი</label>
+            <textarea id='reason' {...register("reason")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='ცვლილების მიზეზი... ' />
+          </div>
+          <div className='flex w-full justify-end items-center gap-[8px]'>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შენახვა</button>
           </div>
         </form>
       </div>

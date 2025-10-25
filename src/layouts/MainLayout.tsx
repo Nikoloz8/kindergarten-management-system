@@ -39,11 +39,11 @@ export default function MainLayout() {
 
     const [addEventForm, setAddEventForm] = useState(false)
     const [markParentsMeeting, setMarkParentsMeeting] = useState(false)
-    const [changeTimeChangeOfEvent, setTimeChangeOfEvent] = useState(false)
+    const [changeTimeOfEvent, setTimeChangeOfEvent] = useState(false)
 
     return (
         <div className="flex items-center justify-center flex-col relative">
-            {addEventForm || markParentsMeeting || changeTimeChangeOfEvent ?
+            {addEventForm || markParentsMeeting || changeTimeOfEvent ?
                 <div className='absolute w-full h-full bg-[rgba(0,0,0,0.5)] z-[10]' onClick={() => {
                     setAddEventForm(false)
                     setMarkParentsMeeting(false)
@@ -53,7 +53,7 @@ export default function MainLayout() {
             <div className="w-[1290px]">
                 <Header />
             </div>
-            <Outlet context={{ register, reset, watch, addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeChangeOfEvent, setTimeChangeOfEvent }} />
+            <Outlet context={{ register, reset, watch, addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeOfEvent, setTimeChangeOfEvent }} />
             <Footer />
         </div>
     )
