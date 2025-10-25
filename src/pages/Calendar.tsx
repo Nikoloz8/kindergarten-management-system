@@ -126,7 +126,7 @@ export default function CalendarPage() {
             </div>
             <div className='flex flex-col gap-[8px]'>
               <label htmlFor="participantsNumber" className='font-[500] text-[1.4rem] w-fit'>მონაწილეთა რაოდენობა</label>
-              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='შეუზღუდავი' />
             </div>
           </div>
           <div className='flex flex-col gap-[8px]'>
@@ -136,6 +136,66 @@ export default function CalendarPage() {
           <div className='flex flex-col gap-[8px]'>
             <label htmlFor="description" className='font-[500] text-[1.4rem] w-fit'>აღწერა</label>
             <textarea id='description' {...register("description")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='დამატებითი ინფორმაცია... ' />
+          </div>
+          <div className='flex w-full justify-end items-center gap-[8px]'>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
+            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შექმნა</button>
+          </div>
+        </form>
+      </div>
+      <div className={`top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute p-[24px] flex-col gap-[16px] hidden ${markParentsMeeting && "flex!"} bg-white z-20`}>
+        <div className='flex w-full justify-between items-center'>
+          <h4 className='font-[600] text-[1.8rem]'>
+            მშობელთა კრების დაგეგმვა
+          </h4>
+          <button onClick={() => setMarkParentsMeeting(false)}>
+            <SVG47 className='w-[14px] cursor-pointer stroke-[gray] hover:stroke-black transition-all duration-200' />
+          </button>
+        </div>
+        <form onSubmit={(e) => e.preventDefault()} className='flex flex-col gap-[16px]'>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="topic" className='font-[500] text-[1.4rem] w-fit'>შეხვედრის თემა</label>
+            <input type="text" id='topic' {...register("topic")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='მაგ: ყოველთვიური მშობელთა კრება' />
+          </div>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="date" className='font-[500] text-[1.4rem] w-fit'>თარიღი</label>
+              <DatePicker
+                id="date"
+                selected={date}
+                onChange={(d) => setDate(d!)}
+                locale="ka"
+                className='border-[1px] p-[8px] text-[1.4rem] w-[300px] hover:bg-[#f1f5f9] transition-all duration-300 cursor-pointer placeholder:duration-300  outline-none hover:placeholder:text-black'
+                dateFormat="dd/MM/yyyy"
+                placeholderText="თარიღის არჩევა"
+              />
+            </div>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="time" className='font-[500] text-[1.4rem] w-fit'>დრო</label>
+              <input type="time" lang='ka' id='time' {...register("time")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+            </div>
+          </div>
+          <div className='flex gap-[16px]'>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="duration" className='font-[500] text-[1.4rem] w-fit'>ხანგძლივობა</label>
+              <input type="text" lang='ka' id='duration' {...register("duration")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='მაგ: 2 საათი' />
+            </div>
+            <div className='flex flex-col gap-[8px]'>
+              <label htmlFor="participantsNumber" className='font-[500] text-[1.4rem] w-fit'>მონაწილეთა რაოდენობა</label>
+              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='შეუზღუდავი' />
+            </div>
+          </div>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="place" className='font-[500] text-[1.4rem] w-fit'>ადგილი</label>
+            <input type="text" lang='ka' id='place' {...register("place")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='მაგ: სააქტო დარბაზი' />
+          </div>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="onlineLink" className='font-[500] text-[1.4rem] w-fit'>ონლაინ ბმული (არასავალდებულო)</label>
+            <input type="text" lang='ka' id='onlineLink' {...register("onlineLink")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='https://meet.google.com/...' />
+          </div>
+          <div className='flex flex-col gap-[8px]'>
+            <label htmlFor="description" className='font-[500] text-[1.4rem] w-fit'>დღის წესრიგი</label>
+            <textarea id='description' {...register("description")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='შეხვედრის დღის წესრიგი და განსახილველი საკითხები... ' />
           </div>
           <div className='flex w-full justify-end items-center gap-[8px]'>
             <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
