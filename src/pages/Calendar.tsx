@@ -32,10 +32,11 @@ export default function CalendarPage() {
   //   },
   // ]
 
-  const [events, setEvents] = useState([])
+  const [events, setEvents] = useState<any[]>(localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")!) : [] )
+  console.log(events)
 
   const [date, setDate] = useState(new Date())
-  const currentMonthNum = dayjs(date).month() + 1
+  // const currentMonthNum = dayjs(date).month() + 1
   const currentMonth = dayjs(date).format("MMMM")
   const currentYear = dayjs(date).year()
 
@@ -58,14 +59,47 @@ export default function CalendarPage() {
     }
   ]
 
-  const { register, watch } = useForm()
+  const { register, watch, reset } = useForm()
   const { addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeOfEvent, setTimeChangeOfEvent } = useOutletContext<TLayoutContext>()
-
-  console.log(changeTimeOfEvent)
 
   const [showTypesMenu, setShowTypesMenu] = useState(false)
   const [selectedType, setSelectedType] = useState("ღონისძიება")
   const eventTypesSingular = ["შეხვედრა", "ღონისძიება", "გაკვეთილი", "ჯანმრთელობა"]
+
+  const getEndTime = (start: Date, durationStr: string) => {
+    console.log("durationStr:", durationStr)
+    console.log( "start:", start)
+    const [hours, minutes] = durationStr.split(":").map(Number)
+    const newDate = new Date(start)
+    newDate.setHours(newDate.getHours() + hours)
+    newDate.setMinutes(newDate.getMinutes() + minutes)
+    return newDate
+  }
+
+
+  const handleAddEvent = () => {
+    const startTime = date
+    const duration = watch("duration1")
+    console.log(watch("duration1"))
+    const endTime = getEndTime(startTime, duration)
+
+    setEvents([...events, {
+      title: watch("title"),
+      type: selectedType,
+      start: startTime,
+      end: endTime,
+      participantsNumber: watch("participantsNumber1"),
+      place: watch("place1"),
+      description: watch("description1"),
+      duration: duration
+    }])
+    console.log(startTime, endTime)
+
+    console.log(events)
+
+    localStorage.setItem("events", JSON.stringify(events))
+    setAddEventForm(false)
+  }
 
   return (
     <div className="flex justify-center w-full mt-[24px] relative">
@@ -115,34 +149,39 @@ export default function CalendarPage() {
               />
             </div>
             <div className='flex flex-col gap-[8px]'>
-              <label htmlFor="time" className='font-[500] text-[1.4rem] w-fit'>დრო</label>
-              <input type="time" lang='ka' id='time' {...register("time")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+              <label htmlFor="time0" className='font-[500] text-[1.4rem] w-fit'>დრო</label>
+              <input type="time" lang='ka' id='time0' {...register("time0")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
             </div>
           </div>
           <div className='flex gap-[16px]'>
             <div className='flex flex-col gap-[8px]'>
               <label htmlFor="duration" className='font-[500] text-[1.4rem] w-fit'>ხანგძლივობა</label>
-              <input type="text" lang='ka' id='duration' {...register("duration")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='მაგ: 2 საათი' />
+              <input type="text" lang='ka' id='duration' {...register("duration1")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='მაგ: 02:30 (საათები:წუთები)' />
             </div>
             <div className='flex flex-col gap-[8px]'>
               <label htmlFor="participantsNumber" className='font-[500] text-[1.4rem] w-fit'>მონაწილეთა რაოდენობა</label>
-              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='შეუზღუდავი' />
+              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber1")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='შეუზღუდავი' />
             </div>
           </div>
           <div className='flex flex-col gap-[8px]'>
             <label htmlFor="place" className='font-[500] text-[1.4rem] w-fit'>ადგილი</label>
-            <input type="text" lang='ka' id='place' {...register("place")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='ღონისძიების ადგილი' />
+            <input type="text" lang='ka' id='place' {...register("place1")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='ღონისძიების ადგილი' />
           </div>
           <div className='flex flex-col gap-[8px]'>
             <label htmlFor="description" className='font-[500] text-[1.4rem] w-fit'>აღწერა</label>
-            <textarea id='description' {...register("description")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='დამატებითი ინფორმაცია... ' />
+            <textarea id='description' {...register("description1")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='დამატებითი ინფორმაცია... ' />
           </div>
           <div className='flex w-full justify-end items-center gap-[8px]'>
-            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
-            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შექმნა</button>
+            <button onClick={() => {
+              setAddEventForm(false)
+              setDate(new Date())
+              reset()
+            }
+            } className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
+            <button onClick={() => handleAddEvent()} className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შექმნა</button>
           </div>
         </form>
-      </div>
+      </div >
       <div className={`top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute p-[24px] flex-col gap-[16px] hidden ${markParentsMeeting && "flex!"} bg-white z-20`}>
         <div className='flex w-full justify-between items-center'>
           <h4 className='font-[600] text-[1.8rem]'>
@@ -171,23 +210,23 @@ export default function CalendarPage() {
               />
             </div>
             <div className='flex flex-col gap-[8px]'>
-              <label htmlFor="time" className='font-[500] text-[1.4rem] w-fit'>დრო</label>
-              <input type="time" lang='ka' id='time' {...register("time")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
+              <label htmlFor="time1" className='font-[500] text-[1.4rem] w-fit'>დრო</label>
+              <input type="time" id='time1' {...register("time1")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='აირჩიეთ დრო' />
             </div>
           </div>
           <div className='flex gap-[16px]'>
             <div className='flex flex-col gap-[8px]'>
               <label htmlFor="duration" className='font-[500] text-[1.4rem] w-fit'>ხანგძლივობა</label>
-              <input type="text" lang='ka' id='duration' {...register("duration")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='მაგ: 2 საათი' />
+              <input type="text" lang='ka' id='duration' {...register("duration2")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='მაგ: 02:00' />
             </div>
             <div className='flex flex-col gap-[8px]'>
               <label htmlFor="participantsNumber" className='font-[500] text-[1.4rem] w-fit'>მონაწილეთა რაოდენობა</label>
-              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='შეუზღუდავი' />
+              <input type="number" lang='ka' id='participantsNumber' {...register("participantsNumber2")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-[300px]' placeholder='შეუზღუდავი' />
             </div>
           </div>
           <div className='flex flex-col gap-[8px]'>
             <label htmlFor="place" className='font-[500] text-[1.4rem] w-fit'>ადგილი</label>
-            <input type="text" lang='ka' id='place' {...register("place")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='მაგ: სააქტო დარბაზი' />
+            <input type="text" lang='ka' id='place' {...register("place2")} className='border-[1px] p-[8px] text-[1.4rem] rounded-[8px] w-full' placeholder='მაგ: სააქტო დარბაზი' />
           </div>
           <div className='flex flex-col gap-[8px]'>
             <label htmlFor="onlineLink" className='font-[500] text-[1.4rem] w-fit'>ონლაინ ბმული (არასავალდებულო)</label>
@@ -195,10 +234,15 @@ export default function CalendarPage() {
           </div>
           <div className='flex flex-col gap-[8px]'>
             <label htmlFor="description" className='font-[500] text-[1.4rem] w-fit'>დღის წესრიგი</label>
-            <textarea id='description' {...register("description")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='შეხვედრის დღის წესრიგი და განსახილველი საკითხები... ' />
+            <textarea id='description' {...register("description2")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='შეხვედრის დღის წესრიგი და განსახილველი საკითხები... ' />
           </div>
           <div className='flex w-full justify-end items-center gap-[8px]'>
-            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
+            <button onClick={() => {
+              setAddEventForm(false)
+              setDate(new Date())
+              reset()
+            }
+            } className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
             <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>დაგეგმვა</button>
           </div>
         </form>
@@ -246,7 +290,12 @@ export default function CalendarPage() {
             <textarea id='reason' {...register("reason")} className='border-[1px] p-[8px] min-h-[100px] text-[1.4rem] rounded-[8px] w-full' placeholder='ცვლილების მიზეზი... ' />
           </div>
           <div className='flex w-full justify-end items-center gap-[8px]'>
-            <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
+            <button onClick={() => {
+              setAddEventForm(false)
+              setDate(new Date())
+              reset()
+            }
+            } className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>გაუქმება</button>
             <button className='p-[8px_16px] border-[1px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-shadow duration-200 cursor-pointer font-[500] text-[1.4rem] text-[#0f172a] hover:bg-[#f1f5f9]'>შენახვა</button>
           </div>
         </form>
@@ -281,8 +330,6 @@ export default function CalendarPage() {
               date={date}
               onNavigate={(newDate) => {
                 setDate(newDate)
-                console.log("📅 Current month:", currentMonthNum)
-                console.log("📆 Current year:", currentYear)
               }}
             />
           </div>
@@ -330,6 +377,6 @@ export default function CalendarPage() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
