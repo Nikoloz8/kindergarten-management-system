@@ -2,7 +2,7 @@ import { Calendar as BigCalendar, dayjsLocalizer } from 'react-big-calendar'
 import dayjs from 'dayjs'
 import "dayjs/locale/ka"
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SVG4 from "../../public/assets/SVG4.svg?react"
 import SVG44 from "../../public/assets/SVG44.svg?react"
 import SVG10 from "../../public/assets/SVG10.svg?react"
@@ -19,21 +19,15 @@ export default function CalendarPage() {
   const localizer = dayjsLocalizer(dayjs)
   dayjs.locale("ka")
   registerLocale("ka", ka);
-  // const events = [
-  //   {
-  //     title: 'Test Event',
-  //     start: new Date(2025, 10, 10, 1, 1),
-  //     end: new Date(2025, 10, 10, 5, 1),
-  //   },
-  //   {
-  //     title: 'Test Event',
-  //     start: new Date(2026, 6, 6),
-  //     end: new Date(2026, 6, 6),
-  //   },
-  // ]
 
-  const [events, setEvents] = useState<any[]>(localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")!) : [] )
-  console.log(events)
+  const stored = localStorage.getItem("events")
+  const initialEvents = stored ? JSON.parse(stored).map((e: any) => ({
+    ...e,
+    start: new Date(e.start),
+    end: new Date(e.end)
+  })) : []
+
+  const [events, setEvents] = useState<any[]>(initialEvents)
 
   const [date, setDate] = useState(new Date())
   // const currentMonthNum = dayjs(date).month() + 1
@@ -61,14 +55,11 @@ export default function CalendarPage() {
 
   const { register, watch, reset } = useForm()
   const { addEventForm, setAddEventForm, markParentsMeeting, setMarkParentsMeeting, changeTimeOfEvent, setTimeChangeOfEvent } = useOutletContext<TLayoutContext>()
-
   const [showTypesMenu, setShowTypesMenu] = useState(false)
   const [selectedType, setSelectedType] = useState("ღონისძიება")
   const eventTypesSingular = ["შეხვედრა", "ღონისძიება", "გაკვეთილი", "ჯანმრთელობა"]
 
   const getEndTime = (start: Date, durationStr: string) => {
-    console.log("durationStr:", durationStr)
-    console.log( "start:", start)
     const [hours, minutes] = durationStr.split(":").map(Number)
     const newDate = new Date(start)
     newDate.setHours(newDate.getHours() + hours)
@@ -76,14 +67,21 @@ export default function CalendarPage() {
     return newDate
   }
 
+  const combineDateAndTime = (date: Date, time: string) => {
+    const [h, m] = time.split(":").map(Number)
+    const d = new Date(date)
+    d.setHours(h)
+    d.setMinutes(m)
+    d.setSeconds(0)
+    return d
+  }
 
   const handleAddEvent = () => {
-    const startTime = date
+    const timeStr = watch("time0")
+    const startTime = combineDateAndTime(date, timeStr)
     const duration = watch("duration1")
-    console.log(watch("duration1"))
     const endTime = getEndTime(startTime, duration)
-
-    setEvents([...events, {
+    const newEvent = {
       title: watch("title"),
       type: selectedType,
       start: startTime,
@@ -92,14 +90,14 @@ export default function CalendarPage() {
       place: watch("place1"),
       description: watch("description1"),
       duration: duration
-    }])
-    console.log(startTime, endTime)
+    }
+    setEvents([...events, newEvent])
 
-    console.log(events)
-
-    localStorage.setItem("events", JSON.stringify(events))
     setAddEventForm(false)
   }
+  useEffect(() => {
+    localStorage.setItem("events", JSON.stringify(events))
+  }, [events])
 
   return (
     <div className="flex justify-center w-full mt-[24px] relative">
